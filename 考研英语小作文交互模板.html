@@ -1,0 +1,2142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>考研英语小作文 · 交互拼装模板（英一英二通用）</title>
+<style>
+:root{
+  --ink:#1b2333; --ink-2:#3d4a63; --muted:#7c889e; --line:#e2e7f0;
+  --bg:#f5f7fb; --panel:#ffffff; --brand:#1f4b8f; --brand-2:#2f6fd0;
+  --accent:#c8791f; --accent-soft:#fdf3e3; --ok:#1f7a5c; --ok-soft:#e8f6ef;
+  --chip:#eef4ff; --chip-line:#b9cdf0; --shadow:0 1px 2px rgba(20,35,60,.06),0 8px 24px rgba(20,35,60,.06);
+  --radius:14px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Source Han Sans SC","Noto Sans CJK SC",system-ui,-apple-system,"Segoe UI",sans-serif;
+  background:var(--bg); color:var(--ink); font-size:14px; line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{margin:0;font-weight:700;letter-spacing:.01em}
+button,select,input,textarea{font-family:inherit;font-size:inherit;color:inherit}
+button{cursor:pointer}
+::selection{background:#cfe0ff}
+
+/* ---------- 顶栏 ---------- */
+.topbar{
+  position:sticky; top:0; z-index:40; background:rgba(255,255,255,.92);
+  backdrop-filter:saturate(160%) blur(8px); border-bottom:1px solid var(--line);
+}
+.topbar-inner{max-width:1460px;margin:0 auto;padding:10px 20px;display:flex;flex-direction:column;gap:9px}
+.brandline{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.brand{display:flex;align-items:baseline;gap:9px}
+.brand b{font-size:17px;letter-spacing:.02em}
+.brand span{font-size:12px;color:var(--muted)}
+.badge{font-size:11px;padding:1px 8px;border-radius:999px;background:var(--accent-soft);color:#8a5310;border:1px solid #f0dcbc;white-space:nowrap}
+.spacer{flex:1}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn{
+  border:1px solid var(--line); background:#fff; border-radius:10px; padding:5px 12px;
+  font-size:13px; font-weight:600; color:var(--ink-2); transition:.15s;
+}
+.btn:hover{border-color:#c3d0e6;background:#f8faff}
+.btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}
+.btn.primary:hover{background:var(--brand-2);border-color:var(--brand-2)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode{
+  border:1px solid var(--line); background:#fff; color:var(--ink-2);
+  padding:6px 12px; border-radius:999px; font-size:13px; font-weight:600; white-space:nowrap;
+}
+.mode:hover{border-color:#b9cdf0}
+.mode[aria-pressed="true"]{background:var(--brand);border-color:var(--brand);color:#fff;box-shadow:0 2px 10px rgba(31,75,143,.25)}
+
+.toolrow{display:flex;gap:14px;align-items:center;flex-wrap:wrap;font-size:12.5px;color:var(--ink-2)}
+.presets{display:flex;align-items:center;gap:8px}
+.presets select{
+  border:1px solid var(--line); border-radius:10px; padding:5px 8px; background:#fff; max-width:330px;
+}
+.toggles{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.scope{font-size:11.5px;color:#9aa4b8;border-left:1px solid var(--line);padding-left:12px}
+.tg{display:inline-flex;align-items:center;gap:6px;cursor:pointer;user-select:none;white-space:nowrap}
+.tg input{position:absolute;opacity:0;pointer-events:none}
+.tg .sw{width:30px;height:17px;border-radius:999px;background:#d7deea;position:relative;transition:.18s;flex:0 0 auto}
+.tg .sw::after{content:"";position:absolute;top:2px;left:2px;width:13px;height:13px;border-radius:50%;background:#fff;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.2)}
+.tg input:checked + .sw{background:var(--brand-2)}
+.tg input:checked + .sw::after{transform:translateX(13px)}
+.tg input:focus-visible + .sw{outline:2px solid var(--brand-2);outline-offset:2px}
+
+/* ---------- 布局 ---------- */
+.wrap{max-width:1460px;margin:0 auto;padding:18px 20px 80px;display:grid;grid-template-columns:minmax(0,1fr) 440px;gap:20px;align-items:start}
+@media (max-width:1180px){ .wrap{grid-template-columns:1fr} .preview-col{position:static !important} }
+
+/* ---------- 编排区 ---------- */
+.block{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:16px;overflow:hidden}
+.blockhead{display:flex;align-items:center;gap:10px;padding:11px 16px;background:linear-gradient(180deg,#fbfcff,#f5f8ff);border-bottom:1px solid var(--line);flex-wrap:wrap}
+.blockhead h3{font-size:14px;color:var(--brand)}
+.blockhead .sub{font-size:12px;color:var(--muted)}
+.blockhead .grow{flex:1}
+.planlabel{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
+.planlabel select{border:1px solid var(--line);border-radius:8px;padding:3px 6px;background:#fff;font-size:12px;max-width:300px}
+.blockbody{padding:6px 16px 14px}
+
+.row{padding:10px 0;border-bottom:1px dashed #eef1f7}
+.row:last-child{border-bottom:0}
+.rowhead{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px}
+.tag{font-size:11px;font-weight:700;color:var(--brand);background:#eaf1fd;border:1px solid #d4e2f9;border-radius:6px;padding:0 6px;letter-spacing:.02em}
+.rlabel{font-size:12.5px;font-weight:600;color:var(--ink-2)}
+.rowhead select{
+  margin-left:auto; max-width:min(430px,60%); border:1px solid var(--line); border-radius:8px;
+  padding:3px 6px; background:#fff; font-size:12px; color:var(--ink-2);
+}
+.sentence{font-size:14.5px;line-height:2.1;color:var(--ink);word-break:break-word}
+.sentence .lit{}
+.chip{
+  display:inline; border:0; background:transparent; padding:0 2px; margin:0;
+  border-bottom:2px dotted var(--chip-line); border-radius:3px; color:var(--brand); font-weight:600;
+  line-height:1.5; font-size:14px;
+}
+.chip:hover{background:var(--chip);border-bottom-color:var(--brand-2)}
+.chip.empty{color:var(--accent);border-bottom:2px dashed #e3bd85;background:var(--accent-soft);font-weight:500}
+.chip.empty:hover{background:#fbe9cd}
+.chip.auto{color:#0f6b52;border-bottom-color:#9fd3c0;background:var(--ok-soft)}
+.note{font-size:12px;color:var(--muted);margin-top:2px}
+.note b{color:var(--accent);font-weight:700}
+.missing .sentence{color:#8b93a5}
+textarea.custom{
+  width:100%;margin-top:6px;border:1px solid #e6d3b3;background:#fffdf8;border-radius:9px;
+  padding:8px 10px;font-size:13.5px;line-height:1.75;resize:vertical;min-height:58px;
+}
+textarea.custom:focus{outline:2px solid #f0d9ae;outline-offset:0}
+
+/* 格式头 / 落款 */
+.frame-list{padding:12px 16px;display:grid;grid-template-columns:96px 1fr;gap:8px 12px;align-items:center}
+.frame-list .k{font-size:12px;color:var(--muted);font-weight:600}
+.frame-line{font-size:14.5px}
+
+/* ---------- 预览 ---------- */
+.preview-col{position:sticky;top:150px}
+.preview{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+.preview-head{display:flex;align-items:center;gap:8px;padding:11px 16px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#fbfcff,#f5f8ff)}
+.preview-head h3{font-size:14px;color:var(--brand)}
+.preview-head .stat{margin-left:auto;font-size:11.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.preview-body{padding:6px 18px 18px;max-height:calc(100vh - 250px);overflow:auto}
+.pblock{padding:12px 0;border-bottom:1px dashed #eef1f7}
+.pblock:last-child{border-bottom:0}
+.pblock h4{font-size:12px;color:var(--muted);letter-spacing:.08em;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.pblock h4 .cn{color:var(--brand);opacity:.85}
+.pen{font-size:14.5px;line-height:1.95;color:var(--ink);white-space:pre-wrap}
+.pen .sh{color:var(--brand);font-weight:600}
+.pzh{font-size:12.5px;line-height:1.8;color:#8a94a8;margin-top:3px;white-space:pre-wrap}
+.pen.placeholder{color:#c0c7d6}
+
+/* 考场精简 */
+body.exam .chip{border-bottom:0;background:transparent;color:var(--ink);font-weight:inherit;padding:0;margin:0}
+body.exam .chip.empty{color:#b9c2d4;background:transparent}
+body.exam .note,body.exam .sub,body.exam .pzh{display:none}
+body.exam .blockhead{background:#fff}
+body.no-zh .pzh{display:none}
+body.no-note .note{display:none}
+body.no-ghost .chip.empty{color:transparent;background:transparent;border-bottom-color:transparent}
+
+/* ---------- 弹层 ---------- */
+.overlay{position:fixed;inset:0;z-index:80;background:rgba(22,32,52,.42);display:flex;align-items:flex-end;justify-content:center;padding:0}
+.overlay[hidden]{display:none}
+.dlg{background:#fff;width:min(720px,100%);max-height:82vh;border-radius:18px 18px 0 0;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 -10px 40px rgba(10,20,40,.25)}
+.dlg-head{padding:14px 18px 10px;border-bottom:1px solid var(--line)}
+.dlg-head .t{display:flex;align-items:baseline;gap:8px;font-weight:700;font-size:15px}
+.dlg-head .t .lbl{color:var(--brand);white-space:nowrap}
+.dlg-head .t #dlgTitleZh{font-size:12px;font-weight:400;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dlg-head .z{font-size:12px;color:var(--muted);margin-top:3px}
+.dlg-search{padding:10px 18px;border-bottom:1px solid var(--line);display:flex;gap:8px}
+.dlg-search input{flex:1;border:1px solid var(--line);border-radius:10px;padding:7px 10px}
+.dlg-list{padding:8px 12px 14px;overflow:auto;flex:1}
+.opt{display:block;width:100%;text-align:left;border:1px solid transparent;background:#fff;border-radius:10px;padding:8px 10px;margin-bottom:2px}
+.opt:hover{background:#f7faff;border-color:#dbe6fa}
+.opt .en{font-weight:600;font-size:13.5px;color:var(--ink)}
+.opt .zh{font-size:12px;color:var(--muted);margin-top:1px}
+.opt .tagline{font-size:11px;color:var(--accent);margin-top:1px}
+.opt[aria-selected="true"]{background:#eef4ff;border-color:#b9cdf0}
+.dlg-foot{padding:10px 18px 16px;border-top:1px solid var(--line);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.dlg-foot input{flex:1;min-width:200px;border:1px solid var(--line);border-radius:10px;padding:7px 10px}
+
+.toast{
+  position:fixed;left:24px;bottom:24px;z-index:120;
+  background:#1b2333;color:#fff;padding:9px 16px;border-radius:999px;font-size:13px;
+  opacity:0;transform:translateY(8px);pointer-events:none;transition:.22s;
+  box-shadow:0 10px 30px rgba(10,20,40,.3);max-width:min(420px,80vw)
+}
+.toast.show{opacity:1;transform:translateY(0)}
+
+.hintbar{margin:0 0 14px;padding:10px 14px;border-radius:12px;background:#fff;border:1px solid var(--line);font-size:12.5px;color:var(--ink-2);box-shadow:var(--shadow)}
+.hintbar b{color:var(--brand)}
+.hintbar .src{color:var(--muted);font-size:11.5px;display:block;margin-top:3px}
+
+@media (max-width:640px){
+  .wrap{padding:12px 10px 60px}
+  .blockbody{padding:4px 10px 10px}
+  .frame-list{grid-template-columns:72px 1fr;padding:10px}
+  .rowhead select{max-width:100%;margin-left:0;width:100%}
+  .preview-body{padding:4px 12px 14px}
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brandline">
+      <div class="brand"><b>考研英语小作文 · 交互拼装模板</b><span>英一英二通用 · 严格覆盖讲义全部待选句</span></div>
+      <span class="badge" id="modeBadge">回复信</span>
+      <div class="spacer"></div>
+      <div class="actions">
+        <button class="btn" id="undoBtn" type="button" title="撤销上一步（Ctrl+Z）">↶ 撤销</button>
+        <button class="btn" id="clearBtn" type="button">清空</button>
+        <button class="btn primary" id="copyBtn" type="button">复制全文</button>
+      </div>
+    </div>
+
+    <div class="modes" id="modes" role="group" aria-label="题型分支"></div>
+
+    <div class="toolrow">
+      <div class="presets">
+        <label for="presetSel">真题预设</label>
+        <select id="presetSel"></select>
+      </div>
+      <div class="toggles" id="toggles"></div>
+      <span class="scope">讲义范围：2.1 书信 / 2.2 通知告示 / 2.3 纪要；图表・图画属大作文，本讲义未涉及</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="composer-col">
+    <div class="hintbar" id="modeHint"></div>
+    <div id="composer"></div>
+  </section>
+
+  <aside class="preview-col">
+    <div class="preview">
+      <div class="preview-head">
+        <h3>全文预览</h3>
+        <span class="stat" id="stat"></span>
+      </div>
+      <div class="preview-body" id="preview"></div>
+    </div>
+  </aside>
+</main>
+
+<div class="overlay" id="overlay" hidden>
+  <div class="dlg" role="dialog" aria-modal="true" aria-labelledby="dlgTitle">
+    <div class="dlg-head">
+      <div class="t"><span class="lbl" id="dlgTitle">选择</span><span id="dlgTitleZh"></span></div>
+      <div class="z" id="dlgDesc"></div>
+    </div>    <div class="dlg-search"><input id="dlgSearch" type="search" placeholder="搜索英文 / 中文 / 语境…" autocomplete="off"></div>
+    <div class="dlg-list" id="dlgList"></div>
+    <div class="dlg-foot">
+      <input id="dlgCustom" type="text" placeholder="也可以直接手输（回车确认）" autocomplete="off">
+      <button class="btn primary" id="dlgOk" type="button">填入</button>
+      <button class="btn" id="dlgClear" type="button">清空此槽</button>
+      <button class="btn" id="dlgClose" type="button">关闭</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+(function(){
+'use strict';
+
+/* ============================================================
+   数据层 1：槽位词库（讲义"待选句 / 可替换词 / 公式 / 注释"）
+   每条 = 一个可点击的短语选项，zh 为中文注释
+   ============================================================ */
+const SLOTS = {
+  salutation: { label: '称呼', zh: '按"已知姓 / 已知名 / 已知职位 / 啥也不知道"四档选；讲义：称呼是唯一区分主动信与回复信的地方之一', items: [
+    { en: 'Dear Mr. Lee,', zh: '只知道姓（男）', note: '讲义·称呼 1' },
+    { en: 'Dear Ms. Lee,', zh: '只知道姓（女）', note: '讲义·称呼 1' },
+    { en: 'Dear Paul,', zh: '只知道名（Paul）', note: '讲义·称呼 2' },
+    { en: 'Dear John,', zh: '只知道名（John）', note: '讲义·称呼 2' },
+    { en: 'Dear David,', zh: '只知道名（David）', note: '2023 英语二真题' },
+    { en: 'Dear Professor,', zh: '只知道职位＝教授', note: '讲义·称呼 3；2022 英语一真题' },
+    { en: 'Dear Professor Smith,', zh: '职位＋姓氏（更稳）', note: '称呼 3 变体' },
+    { en: 'Dear Manager,', zh: '只知道职位＝经理', note: '讲义·称呼 3' },
+    { en: 'Dear President,', zh: '主席 / 校长', note: '讲义·称呼 3' },
+    { en: 'Dear Editor,', zh: '编辑（投稿、投诉信常用）', note: '讲义·称呼 3' },
+    { en: 'Dear Sir or Madam,', zh: '啥也不知道（正式、安全）', note: '讲义·称呼 4' },
+    { en: 'Dear Friends,', zh: '面向群体的告示 / 邀请', note: '讲义·称呼 4' },
+    { en: 'Dear international students,', zh: '面向留学生群体', note: '2022 英语二真题' },
+    { en: 'Dear all,', zh: '全体成员（通知、纪要常用）', note: '称呼 4 变体' }
+  ] },
+
+  sign: { label: '结束语', zh: '落款礼貌语：讲义标准写法是 Yours sincerely, 再换行写 Li Ming（右下角）', items: [
+    { en: 'Yours sincerely,', zh: '标准落款（知道对方姓名）', note: '讲义落款' },
+    { en: 'Yours faithfully,', zh: '不知道对方姓名时用（配 Dear Sir or Madam）', note: '英式正式' },
+    { en: 'Best regards,', zh: '熟人 / 朋友之间', note: '非正式' }
+  ] },
+
+  signName: { label: '署名', zh: '落款姓名：题目没要求时一律写 Li Ming（英语二常用 Zhang Wei）', items: [
+    { en: 'Li Ming', zh: '李明（英语一默认）' },
+    { en: 'Zhang Wei', zh: '张伟（英语二真题常用）' },
+    { en: 'Wang Fang', zh: '王芳' }
+  ] },
+
+  adj: { label: '心情形容词', zh: '紧跟 I am so ___ to hear that；积极来信用前三个，消极来信用后两个', items: [
+    { en: 'pleased', zh: '高兴（积极）', note: '对方来信＝赞美 / 分享 / 询问' },
+    { en: 'glad', zh: '高兴（更口语）', note: '积极语境' },
+    { en: 'excited', zh: '激动', note: '积极语境，活动类' },
+    { en: 'sorry', zh: '遗憾 / 抱歉', note: '消极语境：投诉、坏消息、我的过错' },
+    { en: 'disappointed', zh: '失望', note: '消极语境' }
+  ] },
+
+  news: { label: '背景提要内容', zh: '省略号内容＝摘抄或改编题干（同义词替换 / 主动被动转换），实在改不出就省略', items: [
+    { en: 'you are interested in the innovative craft-making exhibition', zh: '你对创新手工艺展感兴趣', note: '2025 英语一' },
+    { en: 'you are interested in the play based on a classic Chinese novel', zh: '你对改编自中国古典小说的话剧感兴趣', note: '2025 英语二' },
+    { en: "you are interested in the Chinese families' handwritten letters", zh: '你对中国家书感兴趣', note: '2026 英语一' },
+    { en: 'you are interested in the art exhibition', zh: '你对艺术展感兴趣', note: '2023 英语二' },
+    { en: 'you are coming to visit our university next month', zh: '你下个月要来我校访问', note: '邀请 / 接待类' },
+    { en: 'you have been admitted to our university', zh: '你已被我校录取', note: '祝贺类' },
+    { en: 'you are preparing a speech about a scientist', zh: '你在准备一篇关于科学家的演讲稿', note: '2024 英语一' }
+  ] },
+
+  thing: { label: '分享之物', zh: 'Thank you for sharing ___ with me 的宾语', items: [
+    { en: 'the video of your family trip in China', zh: '你中国家庭旅行的视频', note: '2026 英语二' },
+    { en: 'your photos of the campus', zh: '你的校园照片', note: '日常往来' },
+    { en: 'the book you recommended', zh: '你推荐的书', note: '日常往来' },
+    { en: 'your advice on my plan', zh: '你对我计划的建议', note: '感谢 / 回复类' }
+  ] },
+
+  topic: { label: '主题词', zh: '根据题干内容确定的名词短语，是"信件主题"的落点', items: [
+    { en: 'the art exhibition', zh: '艺术展', note: '2023 英语二' },
+    { en: 'the coming innovation contest', zh: '即将到来的创新大赛', note: '2022 英语一' },
+    { en: 'the food festival', zh: '美食节', note: '2022 英语二' },
+    { en: 'your new research project', zh: '你的新研究项目', note: '学术往来' },
+    { en: 'the plan for the trip', zh: '旅行计划', note: '计划类' }
+  ] },
+
+  mood: { label: '心情名词', zh: 'I want to express my ___ through this letter 的心情词', items: [
+    { en: 'disappointment', zh: '不满', note: '讲义：心情——不满' },
+    { en: 'displeasure', zh: '不高兴', note: '讲义：心情——不高兴' },
+    { en: 'apology', zh: '道歉', note: '道歉信' },
+    { en: 'regret', zh: '遗憾', note: '婉拒 / 遗憾' }
+  ] },
+
+  purposeNoun: { label: '意图名词', zh: '过渡句 There are two factors accounting for my ___ 用的名词形式', items: [
+    { en: 'suggestion', zh: '建议（suggestion / advice）', note: '建议信' },
+    { en: 'complaint', zh: '投诉', note: '投诉信' },
+    { en: 'invitation', zh: '邀请', note: '邀请信' },
+    { en: 'gratitude', zh: '感谢', note: '感谢信' },
+    { en: 'apology', zh: '道歉', note: '道歉信' },
+    { en: 'application', zh: '申请', note: '申请信' },
+    { en: 'resignation', zh: '辞职', note: '辞职信' },
+    { en: 'recommendation', zh: '推荐', note: '推荐信' },
+    { en: 'request', zh: '请求', note: '请求信' },
+    { en: 'inquiry', zh: '询问', note: '询问 / 咨询信' }
+  ] },
+
+  func: { label: '来信意图', zh: 'I am writing to ___ 的动词短语；讲义：弱化题型区分，强化功能表达', items: [
+    { en: 'express my gratitude', zh: '表达感谢', note: '感谢信 / 回复感谢' },
+    { en: 'appreciate your generous help', zh: '感激你的帮助', note: '感谢信' },
+    { en: 'clarify some misunderstandings', zh: '澄清误会', note: '解释类' },
+    { en: 'apologize for my mistake', zh: '为我的过失道歉', note: '道歉信' },
+    { en: 'congratulate you on your success', zh: '祝贺你成功', note: '祝贺信' },
+    { en: 'express my sympathy', zh: '表达慰问', note: '慰问信' },
+    { en: 'extend my condolences for your loss', zh: '致以哀悼', note: '慰问信' },
+    { en: 'suggest some improvements', zh: '提出改进建议', note: '建议信' },
+    { en: 'make several suggestions about the plan', zh: '就计划提几点建议', note: '建议信' },
+    { en: 'seek your advice on the matter', zh: '就此征求你的意见', note: '征求信' },
+    { en: 'ask for your suggestions about the plan', zh: '询问你对计划的建议', note: '征求信' },
+    { en: 'complain about the service', zh: '投诉服务', note: '投诉信' },
+    { en: 'express my dissatisfaction with the product', zh: '表达对产品的不满', note: '投诉信' },
+    { en: 'praise your excellent customer service', zh: '表扬你们优质的客服', note: '表扬信' },
+    { en: 'commend your excellent customer service', zh: '称赞你们优质的客服', note: '表扬信（讲义原句）' },
+    { en: 'invite you to participate in the contest', zh: '邀请你参加比赛', note: '邀请信' },
+    { en: 'invite you to attend the exhibition', zh: '邀请你参观展览', note: '邀请信' },
+    { en: 'inform you that the meeting will be put off', zh: '通知你会议推迟', note: '通知类书信' },
+    { en: 'notify you of the meeting', zh: '通知你开会', note: '通知类书信' },
+    { en: 'thank you for your invitation', zh: '感谢你的邀请', note: '回复邀请' },
+    { en: 'accept your invitation', zh: '接受邀请', note: '回复邀请' },
+    { en: 'decline your invitation', zh: '婉拒邀请', note: '回复邀请' },
+    { en: 'inquire about the schedule', zh: '咨询日程安排', note: '咨询 / 询问信' },
+    { en: 'reply to your email', zh: '回复你的邮件', note: '答复信' },
+    { en: 'answer your questions', zh: '回答你的问题', note: '答复信' },
+    { en: 'tell you more about these precious letters', zh: '多讲讲这些珍贵的家书', note: '2026 英语一' },
+    { en: 'share my thoughts about the video', zh: '分享我对视频的看法', note: '2026 英语二' },
+    { en: 'introduce the exhibition to you', zh: '向你介绍这个展览', note: '2025 英语一' },
+    { en: 'recommend the art exhibition to you', zh: '向你推荐艺术展', note: '2023 英语二' },
+    { en: 'recommend the book to you', zh: '向你推荐这本书', note: '推荐信' },
+    { en: 'introduce myself', zh: '自我介绍', note: '自荐 / 求职' },
+    { en: 'remind you that the deadline is approaching', zh: '提醒截止日期将至', note: '提醒信' },
+    { en: 'draw your attention to the safety issue', zh: '提请注意安全问题', note: '提醒信' },
+    { en: 'request your assistance', zh: '请求你的帮助', note: '请求信' },
+    { en: 'offer my support', zh: '提供我的帮助', note: '帮助信' },
+    { en: 'apply for admission', zh: '申请入学', note: '求学申请' },
+    { en: 'apply for a scholarship', zh: '申请奖学金', note: '申奖' },
+    { en: 'apply for the position', zh: '申请该职位', note: '求职' },
+    { en: 'submit my resignation', zh: '递交辞呈', note: '辞职信' },
+    { en: 'formally resign from my present position', zh: '正式辞去现职', note: '辞职信' },
+    { en: 'describe my recent plan', zh: '说明我的近期计划', note: '计划类' },
+    { en: 'provide further details about the plan', zh: '提供计划细节', note: '2025 英语一二通用句' },
+    { en: 'specify the event arrangement', zh: '说明活动安排', note: '安排类' },
+    { en: 'outline my daily schedule', zh: '概述日程', note: '安排类' },
+    { en: 'confirm our appointment', zh: '确认约定', note: '确认类' },
+    { en: 'summarize the main points of the meeting', zh: '总结会议要点', note: '纪要' },
+    { en: 'highlight the importance of this matter', zh: '强调此事的重要性', note: '通用' },
+    { en: 'call on everyone to protect the environment', zh: '呼吁大家保护环境', note: '呼吁类' },
+    { en: 'appeal to the public to save water', zh: '呼吁公众节水', note: '呼吁类' },
+    { en: 'share my feelings about the video and learn more about your trip', zh: '分享感受并想了解更多', note: '2026 英语二' },
+    { en: 'invite you to join in the short play', zh: '邀请你加入话剧', note: '2025 英语二' },
+    { en: 'invite you to participate in the contest with your team', zh: '邀请你带团队参赛', note: '2022 英语一' },
+    { en: 'invite you to attend the food festival', zh: '邀请你参加美食节', note: '2022 英语二' },
+    { en: 'make several suggestions about the library', zh: '就图书馆提几条建议', note: '2007 真题' },
+    { en: 'offer my support', zh: '提供帮助', note: '2024 英语一' }
+  ] },
+
+  funcGer: { label: '来信意图（动名词）', zh: 'I am writing with the intention of ___ 用动名词形式', items: [
+    { en: 'expressing my gratitude', zh: '表达感谢' },
+    { en: 'inviting you to the exhibition', zh: '邀请你参观展览' },
+    { en: 'recommending the book to you', zh: '向你推荐这本书' },
+    { en: 'applying for the position', zh: '申请该职位' },
+    { en: 'seeking your advice', zh: '征求你的意见' }
+  ] },
+
+  major: { label: '专业 / 院系', zh: '公文信自我介绍里的身份；题干给出就用题干的，没给默认学生＋本专业', items: [
+    { en: 'Art', zh: '艺术（2022 英语一）', note: 'I am a student from the department of Art' },
+    { en: 'Computer Science', zh: '计算机' },
+    { en: 'English', zh: '英语' },
+    { en: 'History', zh: '历史' },
+    { en: 'Business Administration', zh: '工商管理' }
+  ] },
+
+  act: { label: '活动 / 事件', zh: '讲义注：活动一般是 Activity / Competition / Exhibition / Conference / Performance 等', items: [
+    { en: 'International Innovation Contest', zh: '国际创新大赛', note: '2022 英语一' },
+    { en: 'singing contest', zh: '歌唱比赛', note: '2020 英语一' },
+    { en: 'food festival', zh: '美食节', note: '2022 英语二' },
+    { en: 'innovative craft-making exhibition', zh: '创新手工艺展', note: '2025 英语一' },
+    { en: 'art exhibition', zh: '艺术展', note: '2023 英语二' },
+    { en: 'family letter exhibition', zh: '家书展', note: '2026 英语一' },
+    { en: 'short play', zh: '话剧', note: '2025 英语二' },
+    { en: 'the short play', zh: '话剧（带冠词，可作主语）', note: '2025 英语二' },
+    { en: 'the food festival', zh: '美食节（带冠词，可作主语）', note: '2022 英语二' },
+    { en: 'volunteering project', zh: '志愿项目', note: '志愿招募' },
+    { en: 'reading party', zh: '读书会', note: '社团活动' },
+    { en: 'charity sale', zh: '慈善义卖', note: '公益活动' },
+    { en: 'graduation ceremony', zh: '毕业典礼', note: '典礼' },
+    { en: 'summer camp', zh: '夏令营', note: '活动' },
+    { en: 'contest', zh: '比赛（统称）', note: '2022 英语一' },
+    { en: 'the art exhibition', zh: '艺术展（带冠词）', note: '2023 英语二' },
+    { en: 'volunteer program', zh: '志愿项目', note: '2023 英语一' },
+    { en: 'conference', zh: '会议', note: '讲义注：XX 可以是 conference' },
+    { en: 'workshop', zh: '工作坊', note: '讲义注' },
+    { en: 'seminar', zh: '研讨会', note: '讲义注' },
+    { en: 'lecture', zh: '讲座', note: '讲义注' },
+    { en: 'forum', zh: '论坛', note: '讲义注' },
+    { en: 'festival', zh: '文化节', note: '讲义注' },
+    { en: 'exhibition', zh: '展览', note: '讲义注' },
+    { en: 'career fair', zh: '招聘会', note: '讲义注' },
+    { en: 'oral report', zh: '口头报告', note: '讲义注' },
+    { en: 'presentation', zh: '演讲', note: '讲义注' },
+    { en: 'research project', zh: '研究项目', note: '讲义注' },
+    { en: 'debate', zh: '辩论赛', note: '讲义注' },
+    { en: 'visit', zh: '参观', note: '讲义注' }
+  ] },
+
+  place: { label: '地点', zh: '讲义注：某地一般是 university / library / conference center / gymnasium 等', items: [
+    { en: 'the student activity center', zh: '学生活动中心', note: '2025 英语一 / 2026 英语一' },
+    { en: 'the playground', zh: '操场', note: '2020 英语一 / 2022 英语二' },
+    { en: 'the library', zh: '图书馆', note: '2007 真题' },
+    { en: 'the conference center', zh: '会议中心', note: '会议类' },
+    { en: 'the gymnasium', zh: '体育馆', note: '体育类' },
+    { en: 'the multimedia room', zh: '多媒体室', note: '讲座类' },
+    { en: 'the dining hall', zh: '食堂', note: '美食类' },
+    { en: 'the online platform', zh: '线上平台', note: '线上活动' },
+    { en: 'the main hall', zh: '主会场', note: '会议' },
+    { en: 'Anhui', zh: '安徽（省名，专有名词）', note: '2024 英语二', proper: true },
+    { en: 'the main hall of our university', zh: '我校主会场', note: '会议' },
+    { en: 'the square', zh: '广场', note: '讲义注 2' },
+    { en: 'our university', zh: '我们大学', note: '讲义注 2' }
+  ] },
+
+  time: { label: '时间', zh: '讲义：1~4 句都是交代时间、地点、事件，选一句背住即可', items: [
+    { en: '8:00 a.m. on Sunday, December 20th', zh: '12月20日周日上午8点', note: '2025 英语一' },
+    { en: '3:00 p.m. on Sunday, December 31st', zh: '12月31日周日下午3点', note: '2022 英语一' },
+    { en: '7:00 p.m. on Sunday, December 31st', zh: '12月31日周日晚上7点', note: '2020 英语一' },
+    { en: '5:00 p.m. on Sunday, December 31st', zh: '12月31日周日晚上5点', note: '2022 英语二' },
+    { en: 'Friday from 7:00 to 8:00 p.m.', zh: '周五晚7点到8点', note: '英语角' },
+    { en: 'next Saturday', zh: '下周六', note: '2026 英语一' }
+  ] },
+
+  theme: { label: '主题', zh: '活动的主题 / 议题，常与 purpose 句搭配', items: [
+    { en: 'Innovation and Future', zh: '创新与未来', note: '2022 英语一' },
+    { en: 'environmental protection', zh: '环境保护', note: '大作文常青主题' },
+    { en: 'traditional Chinese culture', zh: '中国传统文化', note: '文化类' },
+    { en: 'campus safety', zh: '校园安全', note: '纪要常用' },
+    { en: 'staff welfare', zh: '员工福利', note: '纪要例句' }
+  ] },
+
+  aim: { label: '活动目的', zh: 'Centered on the theme of..., the event aims to ___ 的动词短语', items: [
+    { en: 'promote innovation among students', zh: '激发学生的创新' },
+    { en: 'raise awareness of environmental protection', zh: '提高环保意识' },
+    { en: 'celebrate the upcoming New Year', zh: '庆祝即将到来的新年', note: '2020 英语一' },
+    { en: 'enrich students\u2019 extracurricular life', zh: '丰富学生课外生活' }
+  ] },
+
+  field: { label: '领域 / 方向', zh: 'arouse enthusiasm for ___ / valuable experience in ___ 的落点', items: [
+    { en: 'innovation', zh: '创新' },
+    { en: 'environmental protection', zh: '环保' },
+    { en: 'traditional culture', zh: '传统文化' },
+    { en: 'scientific research', zh: '科研' },
+    { en: 'sports', zh: '体育' },
+    { en: 'volunteering', zh: '志愿服务' },
+    { en: "students' sports activities on campus", zh: '学生的校园体育活动', note: '2023 英语一' },
+    { en: 'delicious food', zh: '美食', note: '2022 英语二' }
+  ] },
+
+  people: { label: '参与人群', zh: '讲义 9~12 句：交代参加或有资格参加活动的人物，选两句背住', items: [
+    { en: 'students and faculty members', zh: '学生与教职工', note: '第 9 句' },
+    { en: 'students of all grades, including both domestic and international students', zh: '所有年级含国内外学生', note: '第 10 句' },
+    { en: 'leading figures from various sectors', zh: '各行业领军人物', note: '第 11 句' },
+    { en: 'leading experts and scholars in the field', zh: '业内顶尖专家学者', note: '第 12 句' }
+  ] },
+
+  reward: { label: '奖励', zh: '讲义 17~20 句"画饼"与奖励的落点', items: [
+    { en: 'trophies and certificates', zh: '奖杯与证书', note: '2020 英语一' },
+    { en: 'bonus points', zh: '加分', note: '2020 英语一' },
+    { en: 'valuable souvenirs', zh: '珍贵纪念品', note: '通用' },
+    { en: 'certificates of honour', zh: '荣誉证书', note: '通用' }
+  ] },
+
+  obj: { label: '推荐对象', zh: '推荐信 / 建议信的核心名词（书、电影、景点、人、活动）', items: [
+    { en: 'the book The Old Man and the Sea', zh: '《老人与海》', note: '讲义例句', proper: true },
+    { en: 'the art exhibition', zh: '艺术展', note: '2023 英语二' },
+    { en: 'Hongcun', zh: '宏村', note: '2024 英语二', proper: true },
+    { en: 'the movie Hi, Mom', zh: '《你好，李焕英》', note: '电影', proper: true },
+    { en: 'Shen Kuo', zh: '沈括', note: '名人', proper: true },
+    { en: 'Journey to the West', zh: '《西游记》', note: '2025 英语二', proper: true }
+  ] },
+
+  feature1: { label: '特点 1', zh: 'I would highly recommend X for its exceptional ___', items: [
+    { en: 'thought-provoking ideas', zh: '发人深省的思想' },
+    { en: 'unique design', zh: '独特的设计' },
+    { en: 'deep cultural meaning', zh: '深厚的文化内涵' }
+  ] },
+
+  feature2: { label: '特点 2', zh: 'and remarkable ___', items: [
+    { en: 'inspiring story', zh: '鼓舞人心的故事' },
+    { en: 'remarkable creativity', zh: '非凡的创造力' },
+    { en: 'vivid description', zh: '生动的描写' }
+  ] },
+
+  detail: { label: '具体环节', zh: 'which includes ___（第 27 句需要"具体环节"）', items: [
+    { en: 'an art performance', zh: '艺术表演', note: '2023 英语二' },
+    { en: 'a hands-on session', zh: '动手实践环节', note: '2025 英语一' },
+    { en: 'a keynote speech', zh: '主题演讲', note: '通用' },
+    { en: 'a group discussion', zh: '分组讨论', note: '通用' }
+  ] },
+
+  ability: { label: '能力', zh: 'improve our ability of ___；讲义 2.1 注 2 给了 28 个能力词，全部在此，可自由替换', items: [
+    { en: 'teamwork', zh: '团队合作', note: '讲义注 2' },
+    { en: 'communication', zh: '沟通能力' },
+    { en: 'problem-solving', zh: '解决问题' },
+    { en: 'leadership', zh: '领导力' },
+    { en: 'time management', zh: '时间管理' },
+    { en: 'self-motivation', zh: '内驱力', note: '讲义注 2 原词 Self-motivation' },
+    { en: 'initiative', zh: '主动性' },
+    { en: 'drive and ambition', zh: '干劲与雄心' },
+    { en: 'resilience', zh: '韧性' },
+    { en: 'perseverance', zh: '毅力' },
+    { en: 'reliability', zh: '可靠性' },
+    { en: 'diligence', zh: '勤奋' },
+    { en: 'sense of responsibility', zh: '责任感' },
+    { en: 'accountability', zh: '担当精神' },
+    { en: 'integrity', zh: '诚信' },
+    { en: 'professionalism', zh: '职业精神' },
+    { en: 'a positive attitude', zh: '积极态度' },
+    { en: 'open-mindedness', zh: '开放心态' },
+    { en: 'curiosity', zh: '好奇心' },
+    { en: 'enthusiasm', zh: '热情' },
+    { en: 'critical thinking', zh: '批判性思维' },
+    { en: 'logical reasoning', zh: '逻辑推理' },
+    { en: 'creativity', zh: '创造力' },
+    { en: 'communication skills', zh: '沟通能力（skills 版）' },
+    { en: 'collaboration', zh: '协作精神' },
+    { en: 'interpersonal skills', zh: '人际交往能力' },
+    { en: 'execution', zh: '执行力' },
+    { en: 'efficiency', zh: '效率' },
+    { en: 'adaptability', zh: '适应性' },
+    { en: 'stress management', zh: '抗压能力' }
+  ] },
+
+  period: { label: '时间段', zh: 'during the period of ___', items: [
+    { en: 'the cultural exchange program', zh: '文化交流项目期间', note: '2010 英语二' },
+    { en: 'my stay in your university', zh: '我在贵校期间' },
+    { en: 'the summer camp', zh: '夏令营期间' }
+  ] },
+
+  thingNeed: { label: '急需之物', zh: 'We are badly in need of ___', items: [
+    { en: 'updating the database', zh: '更新数据库', note: '2007 真题' },
+    { en: 'more reference books', zh: '更多参考书' },
+    { en: 'a quiet study room', zh: '安静的自习室' },
+    { en: 'doing some research to gather detailed information', zh: '做调研收集详细信息', note: '2024 英一/英二' },
+    { en: 'assistance', zh: '帮助', note: '2019 英语一' }
+  ] },
+
+  greetTail: { label: '寒暄后半句', zh: 'I hope this letter/email finds you well and ___ 的后半句，可摘抄题干（如"两个展览难以取舍"）', items: [
+    { en: 'it is difficult to decide between the two shows', zh: '在两个展览之间难以取舍', note: '2023 英语二真题' },
+    { en: 'everything goes well with you', zh: '你一切顺利', note: '通用、最安全' },
+    { en: 'you are enjoying your stay in China', zh: '你在中国过得愉快', note: '对方在中国 / 来访语境' },
+    { en: 'you are looking forward to the coming food festival', zh: '你很期待即将到来的美食节', note: '2022 英语二改法' },
+    { en: 'you are doing well with the project', zh: '项目进展顺利', note: '2019 英语一改法' }
+  ] },
+
+  doSomething: { label: '做某事', zh: 'which can help us ___ / so that I can ___', items: [
+    { en: 'study effectively', zh: '有效学习', note: '2007 真题' },
+    { en: 'acquire the latest knowledge', zh: '获取最新知识', note: '2007 真题' },
+    { en: 'improve our service', zh: '改进我们的服务' },
+    { en: 'prepare for the contest', zh: '为比赛做准备' },
+    { en: 'arrive at the exhibition area by 7:00 a.m.', zh: '上午7点前到展区', note: '2025 英语一' },
+    { en: 'tell me more about your trip', zh: '多讲讲你的旅行', note: '2026 英语二' },
+    { en: 'visit my country in due course', zh: '适时来我国访问', note: '2010 英语二' },
+    { en: 'contribute by teaching English', zh: '通过教英语做贡献', note: '2019 英语一' },
+    { en: "catch your audience's attention", zh: '吸引听众的注意力', note: '2024 英语一' },
+    { en: 'acquire official data and policies', zh: '获得官方数据与政策', note: '2024 英语二' },
+    { en: 'extend the opening hours', zh: '延长开放时间', note: '2007 真题' },
+    { en: 'come to the exhibition', zh: '来参观展览', note: '2026 英语一' },
+    { en: 'learn about their life, achievements, and contributions', zh: '了解他们的生活、成就与贡献', note: '2024 英语一' },
+    { en: 'share your draft with me', zh: '把草稿发给我', note: '2024 英语一' }
+  ] },
+
+  stage: { label: '流程环节', zh: '讲义注 1：活动都有哪些环节——选三个环节背住即可', items: [
+    { en: 'an opening ceremony', zh: '开幕式' },
+    { en: 'a welcome address', zh: '欢迎辞' },
+    { en: 'a keynote speech', zh: '主题演讲' },
+    { en: 'a lecture', zh: '讲座' },
+    { en: 'an interview', zh: '访谈' },
+    { en: 'a workshop', zh: '工作坊' },
+    { en: 'a group discussion', zh: '分组讨论' },
+    { en: 'a debate', zh: '辩论' },
+    { en: 'a coffee break', zh: '茶歇' },
+    { en: 'a networking session', zh: '交流环节' },
+    { en: 'a Q&A session', zh: '问答环节' },
+    { en: 'a presentation', zh: '展示' },
+    { en: 'a competition', zh: '比赛' },
+    { en: 'a performance', zh: '表演' },
+    { en: 'a hands-on session', zh: '动手环节' },
+    { en: 'an award presentation', zh: '颁奖' },
+    { en: 'a summary', zh: '总结' },
+    { en: 'a celebration dinner', zh: '庆祝晚宴' }
+  ] },
+
+  askAction: { label: '请求的动作', zh: 'I wonder if you can ___：请求对方做的那件事（与"做某事"分开，避免两句抢同一个槽）', items: [
+    { en: 'extend the opening hours', zh: '延长开放时间', note: '2007 真题' },
+    { en: 'share your draft with me', zh: '把草稿发给我', note: '2024 英语一' },
+    { en: 'tell me more about your trip', zh: '多讲讲你的旅行', note: '2026 英语二' },
+    { en: 'come to the exhibition', zh: '来参观展览', note: '2026 英语一' },
+    { en: 'arrive at the exhibition area by 7:00 a.m.', zh: '上午7点前到展区', note: '2025 英语一' },
+    { en: 'visit my country in due course', zh: '适时来我国访问', note: '2010 英语二' },
+    { en: 'contribute by teaching English', zh: '通过教英语做贡献', note: '2019 英语一' }
+  ] },
+
+  problemEffect: { label: '问题带来的后果', zh: 'Due to…, it is impossible for us to ___.', items: [
+    { en: 'study effectively', zh: '有效学习', note: '2007 真题' },
+    { en: 'finish the task on time', zh: '按时完成任务' },
+    { en: 'focus on our work', zh: '专心工作' },
+    { en: 'get timely help', zh: '及时得到帮助' }
+  ] },
+
+  reason: { label: '原因', zh: 'Due to ___ , it is impossible for us to… 的原因（投诉 / 建议信讲问题）', items: [
+    { en: 'the noisy environment', zh: '环境嘈杂', note: '2007 真题' },
+    { en: 'the outdated equipment', zh: '设备老旧' },
+    { en: 'the tight schedule', zh: '日程紧张' },
+    { en: 'the limited budget', zh: '预算有限' }
+  ] },
+
+  who: { label: '对象（机构 / 人）', zh: 'I wonder if ___ can… 的主语：可以是 you，也可以是图书馆 / 学校等机构', items: [
+    { en: 'you', zh: '你（个人）' },
+    { en: 'the library', zh: '图书馆', note: '2007 真题' },
+    { en: 'the university', zh: '学校' },
+    { en: 'the organizer', zh: '主办方' }
+  ] },
+
+  include: { label: '加入的内容', zh: 'if you include ___（第 44 句"你"版本）', items: [
+    { en: 'some interesting stories or examples related to the scientist', zh: '与这位科学家有关的有趣故事或例子', note: '2024 英语一' },
+    { en: 'more pictures and videos', zh: '更多图片和视频' },
+    { en: 'a short video clip', zh: '一段短视频' }
+  ] },
+
+  doTwo: { label: '做某事（后半句）', zh: 'I wonder if you can ___ so that I can ___：第二个动作，注意与前半句区分', items: [
+    { en: 'assist with the final preparations together', zh: '一起协助最后的准备', note: '2025 英语一' },
+    { en: 'experience the charm of traditional Chinese culture', zh: '体验中国传统文化的魅力', note: '2010 英语二' },
+    { en: 'have more hours to study', zh: '有更多时间学习', note: '2007 真题' },
+    { en: 'offer you some specific advice', zh: '给你一些具体建议', note: '2024 英语一' },
+    { en: 'enjoy it together', zh: '一起欣赏', note: '2026 英语一' },
+    { en: 'visit the same places with my parents one day', zh: '有朝一日和父母去同样的地方', note: '2026 英语二' },
+    { en: 'benefit significantly from your instruction', zh: '从你的指导中获益良多', note: '2019 英语一' }
+  ] },
+
+  fact: { label: '事实', zh: 'Given the fact that ___', items: [
+    { en: 'the library closes too early', zh: '图书馆关门太早' },
+    { en: 'the equipment is outdated', zh: '设备老旧' },
+    { en: 'most students study late at night', zh: '多数学生夜里学习' }
+  ] },
+
+  num: { label: '数量', zh: 'There are at least ___ factors：与单复数联动，自动切换 is/are 与 factor/factors', items: [
+    { en: 'one', zh: '一个（单数）', plural: false },
+    { en: 'two', zh: '两个（复数）', plural: true },
+    { en: 'three', zh: '三个（复数）', plural: true }
+  ] },
+
+  decision: { label: '决定 / 事项', zh: '会议决定的事项', items: [
+    { en: 'the plan', zh: '该计划' },
+    { en: 'the proposal', zh: '该提案' },
+    { en: 'the arrangement', zh: '该安排' }
+  ] },
+
+  ab: { label: 'A / B 对比对象', zh: '第 25 句 While I understand that A..., I believe B... 的两个对象', items: [
+    { en: 'the art exhibition', zh: 'A＝艺术展' },
+    { en: 'the science museum', zh: 'B＝科技馆' },
+    { en: 'the book', zh: 'A＝这本书' },
+    { en: 'the movie', zh: 'B＝这部电影' }
+  ] },
+
+  noticeTopic: { label: '通知主题', zh: 'Attention all students interested in ___ on campus!', items: [
+    { en: 'innovation', zh: '创新' },
+    { en: 'volunteering', zh: '志愿服务' },
+    { en: 'sports', zh: '体育' },
+    { en: 'traditional culture', zh: '传统文化' }
+  ] },
+
+  signup: { label: '报名邮箱', zh: '通知第三段：报名方式', items: [
+    { en: '123456@qq.com', zh: '讲义示例邮箱' },
+    { en: 'studentunion@university.edu.cn', zh: '学生会邮箱' }
+  ] },
+
+  minHost: { label: '主持人', zh: '纪要第一句：欢迎辞的人；不确定是谁就用 the speaker / the host', items: [
+    { en: 'the chairman', zh: '主席 / 董事长' },
+    { en: 'the host', zh: '主持人' },
+    { en: 'Prof. Smith', zh: '史密斯教授', proper: true },
+    { en: 'the university representative', zh: '校方代表' }
+  ] },
+
+  minObjective: { label: '会议目的', zh: '纪要 Objective 一栏：改写自题干的短语或单词', items: [
+    { en: 'review last week\u2019s activity', zh: '回顾上周活动' },
+    { en: 'plan next week\u2019s activity', zh: '计划下周活动' },
+    { en: 'discuss the problem of campus safety', zh: '讨论校园安全问题' },
+    { en: 'discuss the phenomenon of food waste', zh: '讨论食物浪费现象' }
+  ] },
+
+  minAttendees: { label: '参会人', zh: '纪要 Attendees 一栏：来自题干', items: [
+    { en: 'All freshmen', zh: '全体大一新生' },
+    { en: 'All club members', zh: '全体社团成员' },
+    { en: 'All staff members', zh: '全体教职工' },
+    { en: 'All volunteers', zh: '全体志愿者' }
+  ] },
+
+  minDate: { label: '会议日期', zh: '纪要 Date 一栏', items: [
+    { en: 'December 23, 2023', zh: '2023年12月23日', note: '讲义示例' },
+    { en: 'May 12, 2026', zh: '2026年5月12日' }
+  ] },
+
+  minTime: { label: '会议时间', zh: '纪要 Time 一栏', items: [
+    { en: 'From 10:00 a.m. to 11:30 a.m.', zh: '上午10:00—11:30', note: '讲义示例' },
+    { en: 'From 2:00 p.m. to 4:00 p.m.', zh: '下午2:00—4:00' }
+  ] },
+
+  minLocation: { label: '会议地点', zh: '纪要 Location 一栏', items: [
+    { en: 'A111, conference room', zh: 'A111 会议室', note: '讲义示例' },
+    { en: 'Room 302, teaching building', zh: '教学楼302' }
+  ] },
+
+  minSpeaker: { label: '发言人', zh: 'A detailed presentation was delivered by ___', items: [
+    { en: 'the chairman', zh: '董事长 / 主席' },
+    { en: 'Prof. Smith', zh: '史密斯教授', proper: true },
+    { en: 'the guest speaker', zh: '特邀嘉宾' }
+  ] }
+};
+
+
+
+/* ============================================================
+   数据层 2：句子库（讲义全部待选句 / 公式）
+   每句 en 用 {槽位} 标记可替换成分；zh 为对应中文
+   ============================================================ */
+
+/* ---------- 第一段：背景提要（被动写信 / 回复信） ---------- */
+const BG_POSITIVE = [
+  { id: 'bg_thanks', no: '1', en: 'Thanks for your email. I am so {adj} to hear that {news}.', zh: '谢谢你的来信。得知{news}，我很{adj}。', note: '最常用：对方来信是赞美 / 分享 / 询问' },
+  { id: 'bg_share', no: '2', en: 'Thank you for sharing {thing} with me. I truly enjoyed it.', zh: '感谢你与我分享{thing}，我真的很喜欢。', note: '对方来信附了视频 / 照片 / 书等素材' },
+  { id: 'bg_delight', no: '3', en: 'I was delighted to receive your email about {topic}.', zh: '很高兴收到你关于{topic}的来信。', note: '正式一些的"收到来信"版' },
+  { id: 'bg_mood', no: '4', en: 'I want to express my {mood} through this letter regarding {topic} that {news}.', zh: '我想通过这封信表达我对{topic}的{mood}，因为{news}。', note: '讲义公式句：心情＋主题词；适合投诉 / 道歉 / 遗憾' }
+];
+
+const BG_NEGATIVE = [
+  { id: 'bg_sorry', no: '5', en: 'I am sorry to hear that {news}.', zh: '得知{news}，我很抱歉。', note: '消极来信用（对方是坏消息）' },
+  { id: 'bg_apology', no: '6', en: 'I must apologize for {fault}.', zh: '我必须为{fault}道歉。', note: '自己的过错；道歉信' },
+  { id: 'bg_concern', no: '7', en: 'I understand your concern about {topic}.', zh: '我理解你对{topic}的担忧。', note: '投诉 / 质询类来信的标准回应' },
+  { id: 'bg_hardship', no: '8', en: 'I am writing to you because of the difficulty we are facing with {topic}.', zh: '我写信是因为我们在{topic}上遇到了困难。', note: '求助 / 投诉信开场' }
+];
+
+const GREETING = [
+  { id: 'gr_find', no: '9', en: 'I hope this letter/email finds you well and {greetTail}.', zh: '展信佳（祝看到这封信的你一切安好），{greetTail}。', note: '通用寒暄：讲义唯一给了"后半句"的公式' },
+  { id: 'gr_pleasure', no: '10', en: 'It was a great pleasure to receive your email.', zh: '收到您的来信，我深感愉快。', note: '通用寒暄，稳妥不出错' },
+  { id: 'gr_gives', no: '11', en: 'It gives me great pleasure to write to you.', zh: '能给您写这封信，我倍感荣幸。', note: '通用寒暄，略正式' },
+  { id: 'gr_allow', no: '12', en: 'Allow me to extend my warmest greetings to you.', zh: '请允许我向您致以最诚挚的问候。', note: '最正式的一档寒暄' }
+];
+
+/* ---------- 第一段：来信意图 ---------- */
+const INTENT = [
+  { id: 'in_to', no: '1', en: 'I am writing this letter in order to {func}.', zh: '我写这封信是为了{func}。', note: '讲义主公式：in order to + 功能短语' },
+  { id: 'in_ing', no: '2', en: 'I am writing to {func}.', zh: '我写信是为了{func}。', note: '更简洁，考场首选' },
+  { id: 'in_purpose', no: '3', en: 'The purpose of this letter is to {func}.', zh: '本信旨在{func}。', note: '注 2：场景较严肃时的正式开头' },
+  { id: 'in_intention', no: '4', en: 'I am writing with the intention of {funcGer}.', zh: '我写此信意在{funcGer}。', note: '注 2：正式开头，后接动名词' },
+  { id: 'in_honor', no: '5', en: 'It is my honor to invite you to join in {act} / visit {place}.', zh: '我很荣幸地邀请您参加{act} / 参观{place}。', note: '邀请信专用开头（讲义注 2 后）' },
+  { id: 'in_selected', no: '6', en: 'It is my honor to inform you that you have been selected as a member of the Student Union.', zh: '我很荣幸地通知您，您已被选为学生会的一员。', note: '专用开头公式；It is my honor to 可换 It gives me immense pleasure to' }
+];
+
+/* ---------- 第一段：公务信函自我介绍 ---------- */
+const SELF_INTRO = [
+  { id: 'si_dept', no: '1', en: 'I am a student from the department of {major} at a university.', zh: '我是某大学{major}系的一名学生。', note: '题干未给身份时，默认自己是学生' },
+  { id: 'si_undergrad', no: '2', en: 'I am an undergraduate at a university, majoring in {major}.', zh: '我是一名本科在读生，专业是{major}。', note: '第二种自我介绍公式' },
+  { id: 'si_degree', no: '3', en: 'I am currently pursuing a degree in {major} at a university.', zh: '我目前在某大学攻读{major}学位。', note: '第三种；也可说 pursuing a master\u2019s degree' },
+  { id: 'si_as', no: '4', en: 'As a student in the {major} Department, I am writing to {func}.', zh: '作为{major}系的一名学生，我写信是为了{func}。', note: '自我介绍＋来信意图融合成一句（省字数）' },
+  { id: 'si_union', no: '5', en: 'As a member of the Student Union, I am writing to {func}.', zh: '作为学生会的一员，我写信是为了{func}。', note: '2022 英语一真题的身份句' }
+];
+
+/* ---------- 第二段：过渡句 ---------- */
+const TRANSITION = [
+  { id: 'tr_factors', no: '1', en: 'There {be:num} at least {num} factor{s:num} accounting for my {purposeNoun}.', zh: '至少有{num}个因素可以解释我的{purposeNoun}。', note: '最万能；单复数会自动调 is/are 与 factor/s' },
+  { id: 'tr_primary', no: '2', en: 'The primary reason{s:num} for my {purposeNoun} {be:num} as follows.', zh: '我{purposeNoun}的主要理由如下。', note: '正式；与数量联动' },
+  { id: 'tr_outlined', no: '3', en: 'The reasons for my {purposeNoun} are outlined below.', zh: '我{purposeNoun}的理由概述如下。', note: '书面感强，适合建议 / 投诉' },
+  { id: 'tr_myabout', no: '4', en: 'There are my {purposeNoun} about {topic}.', zh: '以下是我关于{topic}的{purposeNoun}。', note: '讲义原文如此（功能等同 These are my…）' },
+  { id: 'tr_details', no: '5', en: 'The details can be listed as follows.', zh: '细节可列举如下。', note: '不需要点明"建议/投诉"时的中性过渡' },
+  { id: 'tr_questions', no: '6', en: 'As for the questions you raised, here are my answers.', zh: '关于你提出的问题，以下是我的回答。', note: '答复信 / 询问回复专用' },
+  { id: 'tr_onebyone', no: '7', en: 'Let me answer your questions one by one.', zh: '让我逐一回答你的问题。', note: '答复信，口语感更强' }
+];
+
+/* ---------- 第二段：50 个功能句 ---------- */
+const P2 = [
+  /* 活动基本信息 1-4 */
+  { id: 's1', no: '1', cat: '活动·时间地点', en: 'The {act} will be held in {place} at {time}.', zh: '{act}将于{time}在{place}举行。', note: '讲义原句 The meeting will be held in…；把 meeting 换成活动名即可。注 3：1~4 句都是交代时间、地点、事件，选一句背住' },
+  { id: 's2', no: '2', cat: '活动·时间地点', en: 'Our university will host the {act} in {place} at {time}.', zh: '我校将于{time}在{place}举办{act}。', note: '同上，把主语换成"我校"' },
+  { id: 's3', no: '3', cat: '活动·时间地点', en: 'The English corner is scheduled to take place in the library on Friday from 7:00 to 8:00 p.m.', zh: '英语角定于星期五晚上7点到8点在图书馆举行。', note: '已写死的完整例句，可直接套改地点时间' },
+  { id: 's4', no: '4', cat: '活动·时间地点', en: 'On Sunday, December 19th, a departmental meeting will be held in the main hall, commencing at 8:00 a.m.', zh: '12月19日周日，一场部门会议将在主会场举行，于上午8点开始。', note: '分词收尾，书面感强，适合通知' },
+
+  /* 活动主题目的 5-8 */
+  { id: 's5', no: '5', cat: '活动·主题目的', en: 'The subject/theme of the conference is {theme}.', zh: '会议的主题是{theme}。', note: '注：5~8 句交代主题和目的，选一句背住' },
+  { id: 's6', no: '6', cat: '活动·主题目的', en: 'The purpose of the conference is to discuss {theme}.', zh: '会议的目的是讨论{theme}。', note: '最常用的"目的"句' },
+  { id: 's7', no: '7', cat: '活动·主题目的', en: 'This conference aims to facilitate an in-depth discussion on {theme}.', zh: '本次会议旨在促进关于{theme}的深入讨论。', note: '进阶词 facilitate an in-depth discussion' },
+  { id: 's8', no: '8', cat: '活动·主题目的', en: 'This event is held under the theme of \u201c{theme}\u201d.', zh: '本次活动在"{theme}"的主题下举行。', note: '带引号主题，适合文化节 / 论坛' },
+  { id: 's8b', no: '8+', cat: '活动·主题目的', en: 'Centered on the theme of {theme}, the event aims to {aim}.', zh: '以{theme}为主题，活动旨在{aim}。', note: '过去分词做状语升级版（讲义第 14 页）' },
+
+  /* 参与范围 9-12 */
+  { id: 's9', no: '9', cat: '活动·参与范围', en: 'The event is anticipated to attract wide participation from both {people}.', zh: '预计该活动将吸引{people}的广泛参与。', note: '注：9~12 句交代参加活动的人物，选两句背' },
+  { id: 's10', no: '10', cat: '活动·参与范围', en: 'Students of all grades are eligible to enter the competition, including both domestic and international students.', zh: '所有年级的学生都有资格参加比赛，包括国内和国际学生。', note: '2020 英语一真题原句' },
+  { id: 's11', no: '11', cat: '活动·参与范围', en: 'We have invited leading figures from various sectors, including eminent scholars, renowned entrepreneurs, and senior media representatives.', zh: '我们邀请了来自各行业的领军人物，包括杰出学者、知名企业家和资深媒体代表。', note: '排比名词短语，适合高端论坛' },
+  { id: 's12', no: '12', cat: '活动·参与范围', en: 'This event is expected to bring together a host of distinguished guests, including leading experts and scholars in the field, who have both profound knowledge and remarkable achievements in their respective areas.', zh: '本次活动预计将汇聚众多贵宾，包括业内顶尖专家学者，他们在各自领域既有深厚学识，又有卓越成就。', note: '最长最满的一句，字数不够时用' },
+
+  /* 流程环节 13-16 */
+  { id: 's13', no: '13', cat: '活动·流程环节', en: 'Interesting activities such as singing contests and debate competitions will be held to arouse students\u2019 enthusiasm for {field}.', zh: '我们将举办歌唱比赛、辩论比赛等有趣活动，以激发学生对{field}的热情。', note: '注 1：13~16 句交代流程环节，选 2 句背' },
+  { id: 's13b', no: '13+', cat: '活动·流程环节', en: 'A series of competitions such as robot competition and aircraft competition will be held to arouse students\u2019 enthusiasm for {field}.', zh: '将举办机器人比赛、飞机比赛等一系列竞赛，以激发学生对{field}的热情。', note: '2022 英语一真题改写' },
+  { id: 's14', no: '14', cat: '活动·流程环节', en: 'Participants will be divided into teams for a collaborative challenge, designed to foster teamwork and creative problem-solving.', zh: '参与者将被分成小组进行团队协作挑战，旨在培养团队精神与创造性解决问题的能力。', note: '团建 / 破冰环节' },
+  { id: 's15', no: '15', cat: '活动·流程环节', en: 'The event will commence with an opening ceremony, followed by a series of workshops and a keynote speech, and will conclude with a discussion session where participants can exchange ideas.', zh: '活动将以开幕式开始，随后是系列研讨会和主题演讲，最后以讨论环节收尾，参与者可在此交流想法。', note: '完整"三段式"流程句' },
+  { id: 's16', no: '16', cat: '活动·流程环节', en: 'Following the opening ceremony, the event will feature a keynote speech, workshops, and a concluding discussion session for participant interaction.', zh: '开幕式后，本次活动将包含主题演讲、多场工作坊以及一个互动讨论环节。', note: 's15 的精简版' },
+  { id: 's16b', no: '16+', cat: '活动·流程环节', en: 'Following the opening ceremony, the event will feature {stage}, which is designed to enrich students\u2019 campus life.', zh: '开幕式后，活动将安排{stage}，旨在丰富学生的校园生活。', note: '注 1：环节词可在这句里自由替换（开幕式 / 主题演讲 / 工作坊…）' },
+
+  /* 奖励收获 17-20 */
+  { id: 's17', no: '17', cat: '活动·奖励收获', en: 'This will be a memorable and rewarding experience and the prizes and souvenirs will be very valuable.', zh: '这将是一次难忘而有收获的经历，奖品和纪念品也将非常珍贵。', note: '注：17~20 句用于"画饼"，写在第二段最后一句' },
+  { id: 's18', no: '18', cat: '活动·奖励收获', en: 'To encourage more students to join, the top three winners will receive {reward}, and all shortlisted participants will be awarded bonus points.', zh: '为鼓励更多学生参加，前三名将获得{reward}，所有入围者都将获得加分。', note: '2020 英语一真题改写' },
+  { id: 's19', no: '19', cat: '活动·奖励收获', en: 'During the event, you will have the opportunity to meet like-minded individuals, engage in interesting activities, and enjoy a great time together.', zh: '活动期间，你将有机会结识志同道合的人，参与有趣的活动，共度美好时光。', note: '对"个人"画饼，邀请信常用' },
+  { id: 's20', no: '20', cat: '活动·奖励收获', en: 'This event will allow you to contribute to the development of our university while gaining valuable experience in {field}.', zh: '此次活动将使你在获得{field}方面宝贵经验的同时，为学校发展做出贡献。', note: '对"贡献＋收获"画饼，志愿 / 招募类' },
+  { id: 's20b', no: '20+', cat: '活动·奖励收获', en: 'This activity offers a precious opportunity to broaden your horizons and enrich your campus life.', zh: '这次活动提供了开阔视野、丰富校园生活的宝贵机会。', note: '可接大作文模板"六大方面"' },
+
+  /* 推荐对象 21-27 */
+  { id: 's21', no: '21', cat: '推荐对象', en: 'Located in {place}, {obj} is one of the most popular scenic spots in the world.', zh: '坐落于{place}，{obj}是世界上最受欢迎的景点之一。', note: '注：21~24 句交代推荐对象，一般放推荐信第一点，全背' },
+  { id: 's22', no: '22', cat: '推荐对象', en: 'Written by a famous writer, {obj} is one of the most popular books in the world.', zh: '由知名作家主笔，{obj}是世界上最受欢迎的书之一。', note: '介绍书籍（Written by / Directed by 可换）' },
+  { id: 's23', no: '23', cat: '推荐对象', en: 'Shen Kuo was an outstanding scientist during the Northern Song Dynasty, who made remarkable achievements in many fields.', zh: '沈括是北宋时期一位杰出的科学家，在许多领域都取得了卓越成就。', note: '介绍名人；换成推荐对象即可' },
+  { id: 's24', no: '24', cat: '推荐对象', en: 'Planned by the Student Union, the activity is one of the most popular events in our university.', zh: '该活动由学生会策划，是我校最受欢迎的活动之一。', note: '介绍活动' },
+  { id: 's25', no: '25', cat: '推荐对象', en: 'While I understand that {ab} has advantages, I believe {obj} will provide you with a more profound and thought-provoking experience.', zh: '虽然我知道{ab}有优势，但我相信{obj}会带给你更深刻、更发人深省的体验。', note: '对比式推荐，适合"二选一"题目' },
+  { id: 's26', no: '26', cat: '推荐对象', en: 'I would highly recommend {obj} for its exceptional {feature1} and remarkable {feature2}.', zh: '我强烈推荐{obj}，因为它拥有卓越的{feature1}和非凡的{feature2}。', note: '注：25~27 句需联想特点，考验词汇量，任选 1 句背' },
+  { id: 's27', no: '27', cat: '推荐对象', en: 'What makes {obj} highly recommendable is the unique experience it offers, which includes {detail}.', zh: '{obj}之所以值得高度推荐，在于它提供的独特体验，其中包括{detail}。', note: '2023 英语二真题原句' },
+  { id: 's27b', no: '27+', cat: '推荐对象', en: 'It offers you a good chance to {doSomething}.', zh: '它给你提供了{doSomething}的好机会。', note: '讲义"简化后充实内容"的 5 个短句之一' },
+  { id: 's27c', no: '27++', cat: '推荐对象', en: 'It broadens your horizons and enriches your knowledge.', zh: '它能开阔你的视野、丰富你的知识。', note: '同上，万能收尾短句' },
+  { id: 's27d', no: '27+++', cat: '推荐对象', en: 'It will help you {doSomething}.', zh: '它会帮助你{doSomething}。', note: '同上：It will help you (to) do.' },
+  { id: 's27e', no: '27++++', cat: '推荐对象', en: 'Through it, you can {doSomething}.', zh: '通过它，你可以{doSomething}。', note: '同上：Through it, you can do.' },
+  { id: 's27f', no: '27+++++', cat: '推荐对象', en: 'You will gain a lot from it and improve your {ability}.', zh: '你将从中学到很多，并提升{ability}。', note: '同上：You will gain / acquire / improve…' },
+
+  /* 能力展示 28-33 */
+  { id: 's28', no: '28', cat: '能力展示与要求', en: 'Over the past few years, I have consistently excelled in my role, which is evidenced by the awards and recognition I have received.', zh: '过去几年我一直表现出色，所获奖项与认可就是证明。', note: '注 1：28~30 句常用于自荐、推荐、求职，任选 2 句' },
+  { id: 's29', no: '29', cat: '能力展示与要求', en: 'I am a highly self-motivated and resilient individual, capable of maintaining focus and productivity in fast-paced environments.', zh: '我是一个高度自律且富有韧性的人，能在快节奏环境中保持专注与高效。', note: '自荐核心句，形容词可换讲义注 2 的能力词' },
+  { id: 's30', no: '30', cat: '能力展示与要求', en: 'I thrive in collaborative settings and have often been the one to facilitate communication and integrate diverse viewpoints in the team.', zh: '我在协作环境中能充分发挥，并常在团队中促进沟通、整合不同观点。', note: '强调团队协作' },
+  { id: 's31', no: '31', cat: '能力展示与要求', en: 'The selected candidates will assist in conducting surveys, collecting and analyzing data on {field}. Moreover, the candidates should be enthusiastic about {field} and have sound organization and communication skills.', zh: '被选中的候选人将协助调查、收集和分析{field}方面的数据；此外应对{field}有热情，并具备良好的组织与沟通能力。', note: '注 1：31~33 句常用于提出要求（招聘 / 招志愿者 / 找队友）' },
+  { id: 's32', no: '32', cat: '能力展示与要求', en: 'The role requires the ability to analyze complex problems, develop practical solutions, and execute them effectively.', zh: '该职位要求具备分析复杂问题、制定可行方案并有效执行的能力。', note: '求职 / 招募的"硬要求"' },
+  { id: 's33', no: '33', cat: '能力展示与要求', en: 'The candidates should be enthusiastic about {field} and have sound organization, communication, teaching and planning skills.', zh: '候选人应对{field}有热情，并具备良好的组织、沟通、教学与策划能力。', note: '要求句的短版本' },
+  { id: 's33b', no: '33+', cat: '能力展示与要求', en: 'No previous experience is required, for we will provide full training and guidance.', zh: '无需经验，我们将提供完整培训与指导。', note: '讲义"再提供一个万能的"' },
+
+  /* 感谢和道歉 34-40 */
+  { id: 's34', no: '34', cat: '感谢与道歉', en: 'I am extremely grateful to you for your unselfish assistance and advice during the period of {period}.', zh: '我非常感谢你在{period}给我的无私帮助与建议。', note: '注：34~38 句就是"拍马屁"，感谢、道歉、邀请都能拍' },
+  { id: 's35', no: '35', cat: '感谢与道歉', en: 'It is your hospitality that enabled me to enjoy the stay and learn a lot.', zh: '正是你的款待使我能够享受这段时光并学到很多。', note: '强调句 It is ... that ...，热情 / 帮助可替换' },
+  { id: 's36', no: '36', cat: '感谢与道歉', en: 'Without your generous help, I would not have made such great progress in {field}.', zh: '如果没有你的慷慨帮助，我就不会在{field}上取得如此大的进步。', note: '虚拟语气，感谢信提分句' },
+  { id: 's37', no: '37', cat: '感谢与道歉', en: 'Without your generous help, I would not have had such a wonderful experience.', zh: '如果没有你的慷慨帮助，我就不会有如此美妙的经历。', note: '2010 英语二真题原句' },
+  { id: 's37b', no: '37+', cat: '感谢与道歉', en: 'Without your timely help, I am afraid the consequences would have been truly serious.', zh: '如果没有你的及时帮助，后果恐怕会很严重。', note: '同上，用于强调"及时"' },
+  { id: 's38', no: '38', cat: '感谢与道歉', en: 'All of us desire to improve our ability of {ability} under your professional guidance.', zh: '我们期望在您的专业指导下提升{ability}。', note: '拍老师 / 教授；邀请信也能用' },
+  { id: 's39', no: '39', cat: '感谢与道歉', en: 'To make up for it, I am ready to immediately correct the mistake and offer my full assistance to resolve the matter.', zh: '为了弥补，我准备立即纠正错误，并全力协助解决问题。', note: '注：39~40 句只用于道歉，任选 1 句' },
+  { id: 's40', no: '40', cat: '感谢与道歉', en: 'I assure you that I have learned a valuable lesson from this and will take concrete steps to ensure it does not happen again.', zh: '我向你保证，我已从中吸取宝贵教训，并将采取具体措施确保不再发生。', note: '道歉信结尾承诺' },
+
+  /* 通用型 41-50 */
+  { id: 's41', no: '41', cat: '通用万能', en: 'We are badly in need of {thingNeed}, which can help us {doSomething}.', zh: '我们急需{thingNeed}，它能帮助我们{doSomething}。', note: '注：41~50 用途极广，建议全背、灵活运用' },
+  { id: 's41b', no: '41+', cat: '通用万能', en: 'We are in urgent need of {thingNeed}, which can help us {doSomething}.', zh: '我们迫切需要{thingNeed}，它能帮助我们{doSomething}。', note: 's41 的同义替换' },
+  { id: 's41c', no: '41++', cat: '通用万能', en: 'You are badly in need of {thingNeed}, which can help you {doSomething}.', zh: '你急需{thingNeed}，它能帮助你{doSomething}。', note: '主语换成"你"：写给同学 / 朋友的建议信用' },
+  { id: 's42', no: '42', cat: '通用万能', en: 'Due to {reason}, it is impossible for us to {problemEffect}.', zh: '由于{reason}，我们无法{problemEffect}。', note: '投诉 / 建议：讲问题（讲义例句 due to the noisy environment…）' },
+  { id: 's43', no: '43', cat: '通用万能', en: 'I wonder if {who} can {askAction} so that we can {doTwo}.', zh: '我想知道{who}是否能{askAction}，这样我们就能{doTwo}。', note: '最万能的"请求"句：主语可以是 you，也可以是图书馆 / 学校' },
+  { id: 's43b', no: '43+', cat: '通用万能', en: 'I wonder if you can {askAction} so that I can {doTwo}.', zh: '我想知道你是否能{askAction}，这样我就能{doTwo}。', note: 's43 的"我"版本：请求落到自己身上时用' },
+  { id: 's43c', no: '43++', cat: '通用万能', en: 'I wonder if you can {askAction} so that you can {doTwo}.', zh: '我想知道你是否能{askAction}，这样你就能{doTwo}。', note: 's43 的"你"版本：好处给对方时用' },
+  { id: 's44', no: '44', cat: '通用万能', en: 'We could have more opportunities to {doSomething} if you improve {thingNeed}.', zh: '如果你能改进{thingNeed}，我们就有更多机会{doSomething}。', note: '建议信的条件句' },
+  { id: 's44b', no: '44+', cat: '通用万能', en: 'You could have more opportunities to {doSomething} if you include {include}.', zh: '如果你加入{include}，你就有更多机会{doSomething}。', note: '主语换成"你"；2024 英语一示例句型' },
+  { id: 's45', no: '45', cat: '通用万能', en: 'It is advisable to {doSomething}, which can really help you.', zh: '做{doSomething}是明智的，这确实能帮到你。', note: '委婉建议' },
+  { id: 's46', no: '46', cat: '通用万能', en: 'Given the fact that {fact}, it would be wise for us to {doSomething}.', zh: '鉴于{fact}这一事实，我们{doSomething}才是明智的。', note: 'Given the fact that 引导原因' },
+  { id: 's47', no: '47', cat: '通用万能', en: '{act} provides a unique opportunity to let you explore your creativity.', zh: '{act}提供了一个让你探索创造力的独特机会。', note: '2023 英语二真题改写' },
+  { id: 's48', no: '48', cat: '通用万能', en: 'Everyone agrees that your {thingNeed} is the key to the satisfactory outcome.', zh: '大家都认为你的{thingNeed}是取得满意结果的关键。', note: '2026 英语一真题改写（the family letter is key to…）' },
+  { id: 's49', no: '49', cat: '通用万能', en: '{act} allows you to experience different cultures and social customs.', zh: '{act}能让你体验不同的文化和社会习俗。', note: '讲义：还可换为 encyclopedic knowledge of nature / science / history' },
+  { id: 's50', no: '50', cat: '通用万能', en: 'I am confident that the students will not only have the opportunity to learn from you, but also to draw inspiration from your example.', zh: '我相信学生们不仅有机会向您学习，还能从您的榜样中汲取灵感。', note: '对"人"的收尾句，邀请教授 / 专家' }
+];
+
+/* ---------- 第三段 ---------- */
+const P3_EMOTION = [
+  { id: 'e1', no: '1', en: 'I would like to express my gratitude for your kind consideration of my {purposeNoun}.', zh: '我想感谢您对我的{purposeNoun}的善意考虑。', note: '建议 / 申请类收尾' },
+  { id: 'e2', no: '2', en: 'Please accept my sincere apology for any inconvenience that I have caused.', zh: '对给您带来的任何不便，请接受我诚挚的歉意。', note: '道歉信收尾' },
+  { id: 'e3', no: '3', en: 'I hope all the members will enjoy the journey.', zh: '我希望所有成员都能享受这段旅程。', note: '活动类收尾' },
+  { id: 'e4', no: '4', en: 'For more information about the activity, please do not hesitate to contact me.', zh: '如需了解更多活动信息，请随时与我联系。', note: '万能收尾，通知 / 邀请都可用' },
+  { id: 'e5', no: '5', en: 'We would appreciate it very much if you could accept our invitation.', zh: '如果您能接受我们的邀请，我们将不胜感激。', note: '邀请信收尾' },
+  { id: 'e6', no: '6', en: 'We hope for your active participation and make this event a grand success.', zh: '我们期待您的积极参与，共同使本次活动圆满成功。', note: '通知 / 告示收尾' },
+  { id: 'e7', no: '7', en: 'It would be our great honor if you could grace the occasion with your presence.', zh: '如若您能莅临，我们将倍感荣幸。', note: '请教授 / 领导，最正式' },
+  { id: 'e8', no: '8', en: 'I am looking forward to your early reply.', zh: '期待您的早日回复。', note: '中性收尾' }
+];
+
+const P3_FAMILY = [
+  { id: 'f1', no: '1', en: 'Please give my best regards to your family.', zh: '请代我向你的家人问好。', note: '以下问候家人的三句可通用' },
+  { id: 'f2', no: '2', en: 'Please send my best wishes to your family.', zh: '请把我最美好的祝愿带给你的家人。', note: '同上' },
+  { id: 'f3', no: '3', en: 'Kindly send my sincere regards to your family.', zh: '请代我向你的家人致以诚挚问候。', note: '同上' }
+];
+
+const P3_REPLY = [
+  { id: 'r1', no: '1', en: 'I would be grateful if you could reply at your earliest convenience.', zh: '如果您能在方便时尽快回复，我将不胜感激。', note: '期待回信 1' },
+  { id: 'r2', no: '2', en: 'Your prompt reply will be highly appreciated.', zh: '非常感谢您的及时回复。', note: '期待回信 2' },
+  { id: 'r3', no: '3', en: 'I am looking forward to hearing from you soon.', zh: '我期待很快收到您的来信。', note: '期待回信 3，最常用' }
+];
+
+/* ---------- 通知 / 告示 ---------- */
+const NOTICE_OPEN = [
+  { id: 'no1', no: '1', en: 'It is a pleasure to inform everyone that a {act} will be held in our university.', zh: '很高兴地通知大家，我校将举办一场{act}。', note: '通知概况 1' },
+  { id: 'no2', no: '2', en: 'We are pleased to announce that a {act} will be held in our university.', zh: '我们很高兴地宣布，我校将举办一场{act}。', note: '通知概况 2' },
+  { id: 'no3', no: '3', en: 'Attention all students interested in {noticeTopic} on campus!', zh: '校园里所有对{noticeTopic}感兴趣的同学请注意！', note: '通知概况 3，口号式开场' },
+  { id: 'no4', no: '4', en: 'To enrich students\u2019 extracurricular life and improve communication among club members, our club will host a wonderful {act}.', zh: '为了丰富学生的课外生活、增进社团成员交流，我们社团将举办一场精彩的{act}。', note: '通知概况 4，带目的状语' }
+];
+
+const NOTICE_PURPOSE = [
+  { id: 'np1', no: '1', en: 'This notice is intended to introduce some details of this contest.', zh: '本通知旨在介绍本次比赛的一些细节。', note: '通知目的 1' },
+  { id: 'np2', no: '2', en: 'This notice serves the purpose of introducing some of the activities.', zh: '这则通知旨在介绍部分活动。', note: '通知目的 2' },
+  { id: 'np3', no: '3', en: 'The relevant matters are hereby notified as follows.', zh: '现将相关事宜通知如下。', note: '通知目的 3，最正式' },
+  { id: 'np4', no: '4', en: 'The following are the notifications of the relevant matters.', zh: '以下是有关事项的通知。', note: '通知目的 4' }
+];
+
+const NOTICE_EXTRA = [
+  { id: 'nx1', no: '1', en: 'Please arrange your time in advance and attend the activity on time.', zh: '请各位提前安排好时间，准时参加活动。', note: '讲义：3 个万能句可放第二段尾，字数不够时用' },
+  { id: 'nx2', no: '2', en: 'During the activity, please observe the on-site order and follow the arrangements of the staff.', zh: '活动期间请遵守现场秩序，听从工作人员安排。', note: '同上' },
+  { id: 'nx3', no: '3', en: 'In order to ensure the smooth progress of the activity, please actively cooperate and jointly create a good activity atmosphere.', zh: '为确保活动顺利进行，请大家积极配合，共同营造良好的活动氛围。', note: '同上' }
+];
+
+const NOTICE_CLOSE = [
+  { id: 'nc1', no: '1', en: 'Put it into practice! If you are interested, this will be a memorable experience for you. We are looking forward to your enthusiastic participation. Please email us at {signup} to sign up.', zh: '快行动吧！如果你感兴趣，这对你来说将是一次难忘的经历。我们期待你的热情参与。请发邮件至{signup}报名。', note: '第三段：发出邀请＋报名方式 1' },
+  { id: 'nc2', no: '2', en: 'You are welcome to join us. If you are interested in this activity and are willing to have quite a different experience these days, please do not hesitate to email us at {signup}.', zh: '欢迎加入我们。如果你对这项活动感兴趣，并愿意这些天有一个完全不同的体验，请不要犹豫，发邮件至{signup}。', note: '第三段 2' },
+  { id: 'nc3', no: '3', en: 'If you are passionate about it, this is an ideal opportunity for you! To apply, please email us at {signup}. Join us today, and make a difference!', zh: '如果你对此充满热情，这对你来说是一个理想的机会！请发邮件至{signup}报名。今天就加入我们，有所改变！', note: '第三段 3' },
+  { id: 'nc4', no: '4', en: 'We look forward to your active participation and believe this activity will bring you an unforgettable experience! Please scan the QR code below to sign up!', zh: '期待大家的积极参与，相信本次活动将带给大家难忘的体验！请扫描下方二维码报名！', note: '第三段 4（线上报名场景）' }
+];
+
+/* ---------- 纪要 ---------- */
+const MIN_OPEN = [
+  { id: 'mo1', no: '1', en: 'The meeting commenced with a warm welcome from {minHost}, followed by an introduction to the purpose of gathering.', zh: '{minHost}首先对大家的到来表示热烈欢迎，随后介绍了此次会议的目的。', note: '第一句：导入 / 介绍' },
+  { id: 'mo2', no: '2', en: 'The {minHost} delivered welcoming remarks, and provided a brief overview of the significance of {theme}.', zh: '{minHost}致欢迎辞，并简要介绍了{theme}的意义。', note: '第一句变体' }
+];
+
+const MIN_PURPOSE = [
+  { id: 'mp1', no: '1', en: 'The meeting aimed to briefly review the activity held last week.', zh: '本次会议旨在对上周的活动做简要回顾。', note: '第二句：会议目的 1' },
+  { id: 'mp2', no: '2', en: 'The meeting aimed to make a plan for the activity to be held next week.', zh: '本次会议旨在为下周举行的活动制定计划。', note: '会议目的 2' },
+  { id: 'mp3', no: '3', en: 'The meeting aimed to discuss the problem of {theme} and find some suitable solutions.', zh: '本次会议旨在讨论{theme}的问题并找到合适的解决方案。', note: '会议目的 3' },
+  { id: 'mp4', no: '4', en: 'Many students and professors participated in the discussion.', zh: '许多同学和老师参与了讨论。', note: '上述三句后均可再加这一句' }
+];
+
+const MIN_VOICE = [
+  { id: 'mv1', no: '1', en: 'The chairman expressed the opinion that enough attention must be paid to {theme}.', zh: '董事长表示必须对{theme}给予足够重视。', note: '第三句：大佬发言 1' },
+  { id: 'mv2', no: '2', en: 'Experts believe that more efforts should be made to improve {theme}.', zh: '专家认为应付出更多努力改善{theme}。', note: '第三句 2' },
+  { id: 'mv3', no: '3', en: 'The majority of workers think that {theme} deserves immediate attention.', zh: '大多数员工认为{theme}值得立刻关注。', note: '第三句 3' },
+  { id: 'mv4', no: '4', en: 'A detailed presentation was delivered by {minSpeaker}, highlighting the mission, vision, and achievements of the project.', zh: '{minSpeaker}做了详细介绍，强调了该项目的使命、愿景和成就。', note: '第三句 4；不确定是谁就用 the speaker' }
+];
+
+const MIN_AGREE = [
+  { id: 'ma1', no: '1', en: 'The majority of those attendees were in favour of {decision}.', zh: '大多数参会者都赞成{decision}。', note: '第四句：手下赞同 1' },
+  { id: 'ma2', no: '2', en: 'Participants engaged in an interactive discussion to address the challenges they faced during the activity.', zh: '参会者进行了互动讨论，以解决活动中面临的挑战。', note: '第四句 2' }
+];
+
+const MIN_DECISION = [
+  { id: 'md1', no: '1', en: 'The meeting agreed to hold the activity of {act}.', zh: '会议同意举办{act}。', note: '第五句：最终决定 1' },
+  { id: 'md2', no: '2', en: 'As a concrete measure, the meeting decided that {decision} would be carried out next month.', zh: '作为具体措施，会议决定{decision}将于下月实施。', note: '最终决定 2' },
+  { id: 'md3', no: '3', en: 'The meeting concluded with a vote of thanks extended to all participants for their active involvement and commitment.', zh: '会议最后向所有参会者表示感谢，感谢他们的积极参与和投入。', note: '最终决定 3：优雅收尾' }
+];
+
+const MIN_NEXT = [
+  { id: 'mn1', no: '1', en: 'The date and location of the next meeting will be announced via email to all participants.', zh: '下次会议的日期和地点将通过邮件通知所有参会者。', note: '第六句（可选）：一次性会议不可写，周期性会议才写' }
+];
+
+/* ---------- 段落方案（下拉切换） ---------- */
+const P2_PLANS = [
+  { id: 'p2_time', name: '方案A · 时间地点＋人群＋奖励（活动类／通知最稳）', rows: ['tr_factors', 's2', 's10', 's18'] },
+  { id: 'p2_flow', name: '方案B · 时间地点＋流程＋画饼（邀请信）', rows: ['tr_details', 's1', 's16', 's17'] },
+  { id: 'p2_reco', name: '方案C · 推荐对象＋特点＋意义（推荐信）', rows: ['tr_details', 's27', 's26', 's49'] },
+  { id: 'p2_ask', name: '方案D · 问题＋诉求＋呼吁（建议／投诉信）', rows: ['tr_primary', 's41', 's42', 's43'] },
+  { id: 'p2_ability', name: '方案E · 能力＋要求＋好处（求职／招募）', rows: ['tr_factors', 's29', 's33', 's20'] },
+  { id: 'p2_answer', name: '方案F · 逐条回答（答复信）', rows: ['tr_questions', 's43', 's47', 's19'] }
+];
+
+const P3_PLANS = [
+  { id: 'p3_std', name: '方案A · 情感＋期待回信', rows: ['e4', 'r3'] },
+  { id: 'p3_invite', name: '方案B · 邀请＋期待回信', rows: ['e5', 'r1'] },
+  { id: 'p3_apology', name: '方案C · 道歉＋期待回信', rows: ['e2', 'r2'] },
+  { id: 'p3_family', name: '方案D · 情感＋问好＋期待回信', rows: ['e1', 'f1', 'r3'] }
+];
+
+const PLAN_SETS = {
+  reply: {
+    p1: [
+      { id: 'r_std', name: '方案A · 标准（寒暄＋意图）', rows: ['gr_find', 'in_to'] },
+      { id: 'r_neg', name: '方案B · 消极来信用（抱歉＋意图）', rows: ['bg_sorry', 'in_to'] },
+      { id: 'r_share', name: '方案C · 对方分享素材（感谢分享＋意图）', rows: ['bg_share', 'in_to'] },
+      { id: 'r_mood', name: '方案D · 心情公式（心情＋主题词）', rows: ['bg_mood', 'in_to'] }
+    ],
+    p2: P2_PLANS,
+    p3: P3_PLANS
+  },
+  active: {
+    p1: [
+      { id: 'a_std', name: '方案A · 标准（自我介绍＋意图）', rows: ['si_dept', 'in_to'] },
+      { id: 'a_union', name: '方案B · 学生会身份（融合一句）', rows: ['si_union', 'in_purpose'] },
+      { id: 'a_invite', name: '方案C · 邀请信（荣幸邀请＋意图）', rows: ['in_honor', 'in_to'] },
+      { id: 'a_honor', name: '方案D · 正式开头（本信旨在…）', rows: ['si_dept', 'in_purpose'] }
+    ],
+    p2: P2_PLANS,
+    p3: P3_PLANS
+  },
+  notice: {
+    p1: [
+      { id: 'n_std', name: '方案A · 概况＋目的（最稳）', rows: ['no1', 'np1'] },
+      { id: 'n_formal', name: '方案B · 正式通知（宣布＋通知如下）', rows: ['no2', 'np3'] },
+      { id: 'n_eye', name: '方案C · 口号式开场（请注意！）', rows: ['no3', 'np2'] }
+    ],
+    p2: P2_PLANS,
+    p3: [
+      { id: 'n_end1', name: '方案A · 号召＋邮件报名', rows: ['nc1'] },
+      { id: 'n_end2', name: '方案B · 欢迎加入＋邮件报名', rows: ['nc2'] },
+      { id: 'n_end3', name: '方案C · 二维码报名', rows: ['nc4'] }
+    ]
+  },
+  minutes: {
+    p1: [
+      { id: 'm_std', name: '方案A · 欢迎辞＋回顾上周', rows: ['mo1', 'mp1'] },
+      { id: 'm_plan', name: '方案B · 欢迎辞＋计划下周', rows: ['mo1', 'mp2'] },
+      { id: 'm_issue', name: '方案C · 致辞＋讨论问题', rows: ['mo2', 'mp3'] }
+    ],
+    p2: [
+      { id: 'm_disc1', name: '方案A · 董事长发言＋赞成', rows: ['mv1', 'ma1'] },
+      { id: 'm_disc2', name: '方案B · 嘉宾介绍＋互动讨论', rows: ['mv4', 'ma2'] }
+    ],
+    p3: [
+      { id: 'm_dec1', name: '方案A · 同意举办＋下次会议', rows: ['md1', 'mn1'] },
+      { id: 'm_dec2', name: '方案B · 具体措施＋致谢收尾', rows: ['md2', 'md3'] }
+    ]
+  }
+};
+
+
+/* ============================================================
+   数据层 3：题型分支（mode）、银行注册表、真题预设
+   ============================================================ */
+
+const group = (arr, cat) => arr.map(o => Object.assign({}, o, { cat: cat }));
+
+const BANKS = {
+  bgReply: [].concat(
+    group(BG_POSITIVE, '背景提要 · 积极'),
+    group(BG_NEGATIVE, '背景提要 · 消极'),
+    group(GREETING, '通用寒暄')
+  ),
+  selfIntro: SELF_INTRO,
+  p1Active: [].concat(
+    group(SELF_INTRO, '自我介绍（不可省略）'),
+    group(GREETING, '通用寒暄（主动信可不用）')
+  ),
+  intent: INTENT,
+  transition: TRANSITION,
+  p2: P2,
+  p2notice: P2.concat(group(NOTICE_EXTRA, '通知 · 万能收尾句')),
+  p3emotion: P3_EMOTION,
+  p3reply: P3_REPLY,
+  p3family: P3_FAMILY,
+  noticeOpen: NOTICE_OPEN,
+  noticePurpose: NOTICE_PURPOSE,
+  noticeClose: NOTICE_CLOSE,
+  minOpen: MIN_OPEN,
+  minPurpose: MIN_PURPOSE,
+  minVoice: MIN_VOICE,
+  minAgree: MIN_AGREE,
+  minDecision: MIN_DECISION,
+  minNext: MIN_NEXT
+};
+
+/* 行 = 段落里的一个"句子位"：有 bank 的用下拉换方案，有 tpl 的直接是固定句式＋槽位 */
+const ROWS = {
+  letterPre: [{ id: 'sal', label: '称呼', tpl: '{salutation}', zhTpl: '', standalone: true }],
+  letterPost: [
+    { id: 'sign', label: '结束语', tpl: '{sign}', zhTpl: '', standalone: true },
+    { id: 'signName', label: '署名', tpl: '{signName}', zhTpl: '', standalone: true }
+  ],
+  p2: [
+    { id: 'p2t', label: '过渡句', bank: 'transition' },
+    { id: 'p2a', label: '分点 1', bank: 'p2' },
+    { id: 'p2b', label: '分点 2', bank: 'p2' },
+    { id: 'p2c', label: '分点 3', bank: 'p2' },
+    { id: 'p2d', label: '收尾 / 画饼（可选）', bank: 'p2', optional: true }
+  ],
+  p2Notice: [
+    { id: 'p2t', label: '过渡句', bank: 'transition' },
+    { id: 'p2a', label: '分点 1', bank: 'p2' },
+    { id: 'p2b', label: '分点 2', bank: 'p2' },
+    { id: 'p2c', label: '分点 3', bank: 'p2' },
+    { id: 'p2d', label: '收尾 / 万能句（讲义通知 3 句在这里）', bank: 'p2notice', optional: true }
+  ],
+  p3: [
+    { id: 'p3a', label: '句1 表示情感', bank: 'p3emotion' },
+    { id: 'p3b', label: '句2 期待回信', bank: 'p3reply' },
+    { id: 'p3c', label: '问候家人（可选）', bank: 'p3family', optional: true }
+  ]
+};
+
+const MODES = [
+  {
+    id: 'reply', name: '书信 · 回复信', short: '回复信', plan: 'p1',
+    intro: '被动写信：题目给来信，你被动回复。收件人一定认识你，所以第一段不需要自我介绍，直接在称呼后写"背景提要＋来信意图"。',
+    src: '讲义 2.1 书信 · 被动写信（回复信）',
+    pre: ROWS.letterPre, post: ROWS.letterPost,
+    p1: [
+      { id: 'p1a', label: '句1 背景提要', bank: 'bgReply' },
+      { id: 'p1b', label: '句2 来信意图', bank: 'intent' }
+    ],
+    p2: ROWS.p2, p3: ROWS.p3, planKey: 'reply'
+  },
+  {
+    id: 'invite', name: '书信 · 邀请信', short: '邀请信', plan: 'p1',
+    intro: '主动写信：从无到有发起邀请。对方不一定认识你，第一段要"自我介绍＋来信意图"，可用邀请信专用开头 It is my honor to invite you to…。',
+    src: '讲义 2.1 书信 · 主动写信（邀请）',
+    pre: ROWS.letterPre, post: ROWS.letterPost,
+    p1: [
+      { id: 'p1a', label: '句1 自我介绍 / 寒暄', bank: 'p1Active' },
+      { id: 'p1b', label: '句2 来信意图 / 邀请', bank: 'intent' }
+    ],
+    p2: ROWS.p2, p3: ROWS.p3, planKey: 'active'
+  },
+  {
+    id: 'suggest', name: '书信 · 建议信 / 投诉信', short: '建议投诉', plan: 'p1',
+    intro: '建议与投诉同源：都是"我看到问题 → 我提方案"。第二段用 41~46 句讲问题、提请求，第三段用 e1/e4 收尾。',
+    src: '讲义 2.1 书信 · 建议 / 投诉（2007、2024 真题）',
+    pre: ROWS.letterPre, post: ROWS.letterPost,
+    p1: [
+      { id: 'p1a', label: '句1 自我介绍 / 寒暄', bank: 'p1Active' },
+      { id: 'p1b', label: '句2 来信意图', bank: 'intent' }
+    ],
+    p2: ROWS.p2, p3: ROWS.p3, planKey: 'active'
+  },
+  {
+    id: 'recommend', name: '书信 · 推荐信', short: '推荐信', plan: 'p1',
+    intro: '推荐信的核心是"推荐对象＋特点＋为什么值得"。第二段直接上 21~27 句，推荐对象、特点、具体环节三个槽必须填满。',
+    src: '讲义 2.1 书信 · 推荐（2023 英语二）',
+    pre: ROWS.letterPre, post: ROWS.letterPost,
+    p1: [
+      { id: 'p1a', label: '句1 自我介绍 / 寒暄', bank: 'p1Active' },
+      { id: 'p1b', label: '句2 来信意图', bank: 'intent' }
+    ],
+    p2: ROWS.p2, p3: ROWS.p3, planKey: 'active'
+  },
+  {
+    id: 'apply', name: '书信 · 求职 / 自荐 / 招募', short: '求职招募', plan: 'p1',
+    intro: '求职、自荐、招志愿者、找队友，本质都是"我能做什么 / 我需要什么样的人"。第二段用 28~33 句展示能力、提要求。',
+    src: '讲义 2.1 书信 · 能力展示与要求（2023 英语一）',
+    pre: ROWS.letterPre, post: ROWS.letterPost,
+    p1: [
+      { id: 'p1a', label: '句1 自我介绍 / 寒暄', bank: 'p1Active' },
+      { id: 'p1b', label: '句2 来信意图', bank: 'intent' }
+    ],
+    p2: ROWS.p2, p3: ROWS.p3, planKey: 'active'
+  },
+  {
+    id: 'thanks', name: '书信 · 感谢信 / 道歉信', short: '感谢道歉', plan: 'p1',
+    intro: '感谢与道歉都用"拍马屁"句：34~38 句夸对方，39~40 句只给道歉用。讲义提醒：历年真题没有纯粹的严肃道歉信。',
+    src: '讲义 2.1 书信 · 感谢和道歉（2010 英语二）',
+    pre: ROWS.letterPre, post: ROWS.letterPost,
+    p1: [
+      { id: 'p1a', label: '句1 背景 / 寒暄', bank: 'bgReply' },
+      { id: 'p1b', label: '句2 来信意图', bank: 'intent' }
+    ],
+    p2: ROWS.p2, p3: ROWS.p3, planKey: 'reply'
+  },
+  {
+    id: 'notice', name: '通知 / 告示（notice）', short: '通知', plan: 'notice',
+    intro: '通知＝告示，英文都是 notice。与邀请信相比只差格式和一、三段：开头"通知概况＋通知目的"，结尾"发出邀请＋报名方式"，第二段与书信完全相同。',
+    src: '讲义 2.2 通知＝告示',
+    pre: [],
+    head: ['Notice'],
+    post: [{ id: 'nSign', label: '署名与日期', tpl: '{signName}\nDecember 20, 2025', zhTpl: '', standalone: true }],
+    p1: [
+      { id: 'n1', label: '句1 通知概况', bank: 'noticeOpen' },
+      { id: 'n2', label: '句2 通知目的', bank: 'noticePurpose' }
+    ],
+    p2: ROWS.p2Notice,
+    p3: [{ id: 'n3', label: '发出邀请＋报名方式', bank: 'noticeClose' }],
+    planKey: 'notice'
+  },
+  {
+    id: 'minutes', name: '纪要（Minutes）', short: '纪要', plan: 'minutes',
+    intro: '23 年新增题型：纪要＝换了格式的书信。头部写 Date / Time / Location / Objective / Attendees，正文六句：导入→目的→大佬发言→手下赞同→最终决定→（可选）下次会议。',
+    src: '讲义 2.3 纪要',
+    pre: [
+      { id: 'md', label: 'Date', tpl: 'Date: {minDate}', zhTpl: '', standalone: true },
+      { id: 'mt', label: 'Time', tpl: 'Time: {minTime}', zhTpl: '', standalone: true },
+      { id: 'ml', label: 'Location', tpl: 'Location: {minLocation}', zhTpl: '', standalone: true },
+      { id: 'mo', label: 'Objective', tpl: 'Objective: {minObjective}', zhTpl: '', standalone: true },
+      { id: 'ma', label: 'Attendees', tpl: 'Attendees: {minAttendees}', zhTpl: '', standalone: true }
+    ],
+    head: ['Minutes of Meeting'],
+    post: [{ id: 'mb', label: 'Recorded by', tpl: 'Recorded by: {signName}\n{minDate}', zhTpl: '', standalone: true }],
+    p1: [
+      { id: 'm1', label: '句1 导入 / 介绍', bank: 'minOpen' },
+      { id: 'm2', label: '句2 会议目的', bank: 'minPurpose' }
+    ],
+    p2: [
+      { id: 'm3', label: '句3 大佬发言', bank: 'minVoice' },
+      { id: 'm4', label: '句4 手下赞同', bank: 'minAgree' }
+    ],
+    p3: [
+      { id: 'm5', label: '句5 最终决定', bank: 'minDecision' },
+      { id: 'm6', label: '句6 下次会议（可选）', bank: 'minNext', optional: true }
+    ],
+    planKey: 'minutes'
+  }
+];
+
+/* 纪要头部另存的槽位在 SLOTS 里没有，统一走"自填"分支即可 */
+
+/* ---------------- 真题预设 ---------------- */
+const PRESETS = [
+  {
+    id: 'y2025e1', label: '2025 英语一 · 答复信：创新手工艺展', mode: 'reply', plan1: 'r_std', p2plan: 'p2_flow',
+    slots: {
+      salutation: 'Dear Paul,', adj: 'pleased',
+      news: 'you are interested in the innovative craft-making exhibition',
+      func: 'introduce the exhibition to you', purposeNoun: 'invitation',
+      act: 'innovative craft-making exhibition', place: 'the student activity center',
+      time: '8:00 a.m. on Sunday, December 20th',
+      askAction: 'arrive at the exhibition area by 7:00 a.m.',
+      doTwo: 'assist with the final preparations together',
+      who: 'you',
+      detail: 'a hands-on session'
+    },
+    rows: { p1a: 'bg_thanks', p1b: 'in_to', p2t: 'tr_details', p2a: 's1', p2b: '__custom', p2c: 's43', p2d: '' },
+    custom: { p2b: 'The exhibition will feature a keynote speech on craft-making, innovative crafts from all over the world, and a hands-on session.' }
+  },
+  {
+    id: 'y2025e2', label: '2025 英语二 · 邀请信：话剧《西游记》', mode: 'invite', plan1: 'a_invite', p2plan: 'p2_flow',
+    slots: {
+      salutation: 'Dear John,', adj: 'glad',
+      news: 'you are interested in the play based on a classic Chinese novel',
+      func: 'invite you to join in the short play', purposeNoun: 'invitation',
+      act: 'the short play', place: 'the student activity center', time: 'next Saturday'
+    },
+    rows: { p1a: 'bg_thanks', p1b: 'in_to', p2t: '', p2a: '__custom', p2b: '__custom', p2c: 's47', p2d: '__custom' },
+    custom: {
+      p2a: 'The short play is adapted from Journey to the West, one of China\u2019s Four Great Classical Novels.',
+      p2b: 'Given your energy and lively personality, you are the perfect choice for the role of the Monkey King.',
+      p2d: 'Rehearsals will be held on weekends at the student activity center, starting next month.'
+    }
+  },
+  {
+    id: 'y2026e1', label: '2026 英语一 · 答复信：家书展', mode: 'reply', plan1: 'r_std', p2plan: 'p2_answer',
+    slots: {
+      salutation: 'Dear Paul,', adj: 'glad',
+      news: "you are interested in the Chinese families' handwritten letters",
+      func: 'tell you more about these precious letters', purposeNoun: 'invitation',
+      act: 'family letter exhibition', place: 'the student activity center', time: 'next Saturday',
+      askAction: 'come to the exhibition', doTwo: 'enjoy it together', who: 'you',
+      thingNeed: 'family letter'
+    },
+    rows: { p1a: 'bg_thanks', p1b: 'in_to', p2t: '', p2a: '__custom', p2b: '__custom', p2c: '__custom', p2d: 's43' },
+    custom: {
+      p2a: 'Firstly, everyone agrees that the family letter is key to passing down family values and love from generation to generation.',
+      p2b: 'Moreover, these letters provide a unique opportunity to understand the wisdom and expectations of our elders.',
+      p2c: 'Additionally, the family letter exhibition will be held in the student activity center next Saturday.'
+    }
+  },
+  {
+    id: 'y2026e2', label: '2026 英语二 · 答复信：家人旅行视频', mode: 'reply', plan1: 'r_share', p2plan: 'p2_answer',
+    slots: {
+      salutation: 'Dear John,', thing: 'the video of your family trip in China',
+      func: 'share my feelings about the video and learn more about your trip', purposeNoun: 'gratitude',
+      askAction: 'tell me more about your trip', doTwo: 'visit the same places with my parents one day'
+    },
+    rows: { p1a: 'bg_share', p1b: 'in_to', p2t: '', p2a: '__custom', p2b: '__custom', p2c: 's43b', p2d: '' },
+    custom: {
+      p2a: 'Firstly, the video allows me to experience the happiness of your family trip.',
+      p2b: 'Moreover, it shows not only the beautiful scenery, but also the happy smiles of your family.'
+    }
+  },
+  {
+    id: 'y2023e2', label: '2023 英语二 · 建议信：推荐艺术展', mode: 'recommend', plan1: 'r_std', p2plan: 'p2_reco',
+    slots: {
+      salutation: 'Dear David,', greetTail: 'it is difficult to decide between the two shows',
+      func: 'recommend the art exhibition to you', purposeNoun: 'recommendation',
+      obj: 'the art exhibition', detail: 'an art performance', act: 'the art exhibition'
+    },
+    rows: { p1a: 'gr_find', p1b: 'in_to', p2t: '', p2a: 's27', p2b: 's47', p2c: 's49', p2d: '' },
+    custom: {}
+  },
+  {
+    id: 'y2022e1', label: '2022 英语一 · 邀请信：致英国教授', mode: 'invite', plan1: 'a_union', p2plan: 'p2_time',
+    slots: {
+      salutation: 'Dear Professor,', major: 'Art',
+      func: 'invite you to participate in the contest with your team', purposeNoun: 'invitation',
+      act: 'contest', place: 'the playground', time: '3:00 p.m. on Sunday, December 31st',
+      field: 'innovation'
+    },
+    rows: { p1a: '__custom', p1b: 'in_to', p2t: '', p2a: 's1', p2b: 's13b', p2c: 's17', p2d: '' },
+    custom: { p1a: 'As a student in the Art Department, it is my honor to inform you that our university will be hosting the International Innovation Contest.' }
+  },
+  {
+    id: 'y2022e2', label: '2022 英语二 · 邀请信：留学生美食节', mode: 'invite', plan1: 'a_invite', p2plan: 'p2_time',
+    slots: {
+      salutation: 'Dear international students,', greetTail: 'you are looking forward to the coming food festival',
+      func: 'invite you to attend the food festival', purposeNoun: 'invitation',
+      act: 'food festival', place: 'the playground', time: '5:00 p.m. on Sunday, December 31st',
+      field: 'delicious food'
+    },
+    rows: { p1a: 'gr_find', p1b: 'in_to', p2t: '', p2a: 's1', p2b: 's13', p2c: 's17', p2d: '' },
+    custom: {}
+  },
+  {
+    id: 'y2022e2b', label: '2022 英语二 · 邀请信（讲义备选版）', mode: 'invite', plan1: 'a_invite', p2plan: 'p2_flow',
+    slots: {
+      salutation: 'Dear international students,',
+      func: 'invite you to attend the food festival', purposeNoun: 'invitation',
+      act: 'the food festival', place: 'the playground', time: 'Friday from 5:00 p.m. to 7:00 p.m.'
+    },
+    rows: { p1a: 'gr_pleasure', p1b: 'in_to', p2t: '', p2a: '__custom', p2b: 's49', p2c: 's10', p2d: '' },
+    custom: { p2a: 'Firstly, the food festival is scheduled to be held on the playground on Friday from 5:00 p.m. to 7:00 p.m.' }
+  },
+  {
+    id: 'y2023e1', label: '2023 英语一 · 通知：招募项目志愿者', mode: 'notice', p2plan: 'p2_ability',
+    slots: {
+      act: 'volunteer program', field: 'students\u2019 sports activities on campus',
+      signup: 'studentunion@university.edu.cn', purposeNoun: 'request'
+    },
+    rows: { n1: 'no1', n2: 'np3', p2t: '', p2a: 's31', p2b: 's20', p2c: 's33', p2d: '', n3: 'nc1' },
+    custom: {}
+  },
+  {
+    id: 'y2020e1', label: '2020 英语一 · 通知：歌唱比赛', mode: 'notice', p2plan: 'p2_time',
+    slots: {
+      act: 'singing contest', place: 'the playground', time: '7:00 p.m. on Sunday, December 31st',
+      reward: 'trophies and certificates', signup: '123456@qq.com', purposeNoun: 'invitation'
+    },
+    rows: { n1: 'no1', n2: 'np1', p2t: '', p2a: 's1', p2b: '__custom', p2c: 's18', p2d: '', n3: 'nc1' },
+    custom: { p2b: 'In addition, the purpose of the singing contest is to celebrate the upcoming New Year.' }
+  },
+  {
+    id: 'y2010e2', label: '2010 英语二 · 感谢信：感谢美国同事', mode: 'thanks', plan1: 'a_std', p2plan: 'p2_ask',
+    slots: {
+      salutation: 'Dear Mr. Lee,', func: 'express my gratitude', purposeNoun: 'gratitude',
+      period: 'the cultural exchange program',
+      askAction: 'visit my country in due course',
+      doTwo: 'experience the charm of traditional Chinese culture'
+    },
+    rows: { p1a: 'gr_pleasure', p1b: 'in_to', p2t: '', p2a: 's34', p2b: 's37', p2c: 's43c', p2d: '' },
+    custom: {}
+  },
+  {
+    id: 'y2019e1', label: '2019 英语一 · 答复信：援助乡村小学', mode: 'reply', plan1: 'r_std', p2plan: 'p2_answer',
+    slots: {
+      salutation: 'Dear Mr. Lee,', greetTail: 'you are doing well with the project',
+      func: 'reply to your email', purposeNoun: 'request',
+      thingNeed: 'assistance', doSomething: 'contribute by teaching English',
+      doTwo: 'benefit significantly from your instruction'
+    },
+    rows: { p1a: 'gr_find', p1b: 'in_to', p2t: '', p2a: '__custom', p2b: '__custom', p2c: '__custom', p2d: '' },
+    custom: {
+      p2a: 'First and foremost, the purpose of the \u201cAiding Rural Primary School\u201d project is to provide a platform for people who want to spread love.',
+      p2b: 'Undoubtedly, students in rural primary schools are badly in need of assistance, which can help them receive a good education.',
+      p2c: 'I wonder if you could contribute by teaching English so that they would benefit significantly from your instruction.'
+    }
+  },
+  {
+    id: 'y2007', label: '2007 · 建议信（投诉）：图书馆', mode: 'suggest', plan1: 'a_std', p2plan: 'p2_ask',
+    slots: {
+      salutation: 'Dear Sir or Madam,', func: 'make several suggestions about the library',
+      purposeNoun: 'suggestion', topic: 'the library service',
+      thingNeed: 'updating the database', doSomething: 'acquire the latest knowledge',
+      reason: 'the noisy environment', who: 'the library', doTwo: 'have more hours to study',
+      askAction: 'extend the opening hours', problemEffect: 'study effectively'
+    },
+    rows: { p1a: 'gr_pleasure', p1b: 'in_to', p2t: 'tr_primary', p2a: 's41', p2b: 's42', p2c: 's43', p2d: '' },
+    custom: {}
+  },
+  {
+    id: 'y2024e1', label: '2024 英语一 · 答复信：写科学家讲稿', mode: 'reply', plan1: 'r_std', p2plan: 'p2_ask',
+    slots: {
+      salutation: 'Dear Paul,', adj: 'glad', news: 'you are preparing a speech about a scientist',
+      func: 'offer my support', purposeNoun: 'suggestion',
+      thingNeed: 'doing some research to gather detailed information',
+      include: 'some interesting stories or examples related to the scientist',
+      askAction: 'share your draft with me', doSomething: 'catch your audience\u2019s attention', doTwo: 'offer you some specific advice'
+    },
+    rows: { p1a: 'bg_thanks', p1b: 'in_to', p2t: '', p2a: '__custom', p2b: 's44b', p2c: 's43b', p2d: '' },
+    custom: { p2a: 'You are badly in need of doing some research to gather detailed information, which can help you learn about their life, achievements, and contributions.' }
+  },
+  {
+    id: 'y2024e2', label: '2024 英语二 · 建议信：宏村调研', mode: 'suggest', plan1: 'a_std', p2plan: 'p2_reco',
+    slots: {
+      salutation: 'Dear Professor,', func: 'suggest some improvements', purposeNoun: 'suggestion',
+      place: 'Anhui', obj: 'Hongcun',
+      thingNeed: 'doing some research to gather detailed information',
+      doSomething: 'acquire official data and policies'
+    },
+    rows: { p1a: 'gr_pleasure', p1b: 'in_to', p2t: '', p2a: 's21', p2b: 's41', p2c: '__custom', p2d: '' },
+    custom: { p2c: 'I am confident that by interviewing the residents we will not only have the opportunity to understand the needs and challenges of preserving ancient buildings, but also to obtain valuable insights.' }
+  }
+];
+
+
+/* ============================================================
+   逻辑层
+   ============================================================ */
+const MODE_MAP = {};
+MODES.forEach(m => { MODE_MAP[m.id] = m; });
+
+const STORE_KEY = 'kaoyan-xzw-puzzle-v1';
+
+const PROPER_WORDS = 'China Chinese English December Sunday Monday Tuesday Wednesday Thursday Friday Saturday January February March April May June July August September October November New Year International Student Union Journey West Anhui Hongcun Shen Kuo Art Aiding Rural Primary School National Day Festival Christmas I'.split(' ');
+
+const DEFAULT_TOGGLES = { bi: true, exam: false, notes: true, ghost: true, polish: true };
+const DEFAULT_SLOTS = { sign: 'Yours sincerely,', signName: 'Li Ming' };
+
+function esc(s) {
+  return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+function trunc(s, n) {
+  s = String(s || '');
+  return s.length > n ? s.slice(0, n - 1) + '…' : s;
+}
+function clone(o) { return JSON.parse(JSON.stringify(o)); }
+
+/* ---------------- 状态 ---------------- */
+function defaultPlans(modeId) {
+  const key = MODE_MAP[modeId].planKey;
+  const set = PLAN_SETS[key];
+  return { p1: set.p1[0].id, p2: set.p2[0].id, p3: set.p3[0].id };
+}
+
+let state = {
+  mode: 'reply',
+  plans: defaultPlans('reply'),
+  rows: {},
+  custom: {},
+  slots: clone(DEFAULT_SLOTS),
+  toggles: clone(DEFAULT_TOGGLES)
+};
+
+let history = [];
+
+function snapshot() {
+  return clone({ mode: state.mode, plans: state.plans, rows: state.rows, custom: state.custom, slots: state.slots, toggles: state.toggles });
+}
+function pushHistory() {
+  history.push(snapshot());
+  if (history.length > 40) history.shift();
+  persist();
+}
+function persist() {
+  try {
+    localStorage.setItem(STORE_KEY, JSON.stringify({ state: state, history: history.slice(-12) }));
+  } catch (e) { /* 隐私模式 / 配额问题：忽略 */ }
+}
+function restore() {
+  try {
+    const raw = localStorage.getItem(STORE_KEY);
+    if (!raw) return false;
+    const d = JSON.parse(raw);
+    if (!d || !d.state || !MODE_MAP[d.state.mode]) return false;
+    state = Object.assign(state, d.state);
+    state.toggles = Object.assign(clone(DEFAULT_TOGGLES), d.state.toggles || {});
+    state.slots = Object.assign(clone(DEFAULT_SLOTS), d.state.slots || {});
+    history = Array.isArray(d.history) ? d.history : [];
+    return true;
+  } catch (e) { return false; }
+}
+
+/* ---------------- 槽位 ---------------- */
+function normApos(s) { return String(s).replace(/[\u2018\u2019]/g, "'"); }
+
+function slotInfo(id) {
+  const def = SLOTS[id];
+  const v = state.slots[id];
+  if (!v) return { empty: true, label: def ? def.label : id, en: '', zh: '', proper: false };
+  const item = def ? def.items.find(function (x) { return x.en === v || normApos(x.en) === normApos(v); }) : null;
+  return {
+    empty: false,
+    label: def ? def.label : id,
+    en: v,
+    zh: item ? item.zh : v,
+    proper: item ? !!item.proper : /\b[A-Z][a-z]+/.test(v),
+    plural: item ? item.plural : undefined
+  };
+}
+function isPlural(id) {
+  const info = slotInfo(id);
+  if (info.plural !== undefined) return !!info.plural;
+  const t = info.en.trim();
+  if (/^(one|a|an)\b/i.test(t)) return false;
+  if (/\b(two|three|several|many|both|all|most)\b/i.test(t)) return true;
+  if (/\b(and)\b/.test(t)) return true;
+  if (/(?:[^s]s|es)$/i.test(t) && !/(?:ss|us|is)$/i.test(t)) return true;
+  return false;
+}
+
+/* ---------------- 模板渲染 ---------------- */
+const TOKEN = /\{(be|s|have|do):([A-Za-z][A-Za-z0-9_]*)\}|\{([A-Za-z][A-Za-z0-9_]*)\}/g;
+
+function splitTemplate(tpl) {
+  const frags = [];
+  let last = 0, m;
+  TOKEN.lastIndex = 0;
+  while ((m = TOKEN.exec(tpl))) {
+    if (m.index > last) frags.push({ kind: 'lit', text: tpl.slice(last, m.index) });
+    if (m[3]) {
+      frags.push({ kind: 'slot', slot: m[3] });
+    } else {
+      const op = m[1], sid = m[2];
+      const pl = isPlural(sid);
+      let w = '';
+      if (op === 'be') w = pl ? 'are' : 'is';
+      else if (op === 'have') w = pl ? 'have' : 'has';
+      else if (op === 'do') w = pl ? 'do' : 'does';
+      else w = pl ? 's' : '';
+      frags.push({ kind: 'lit', text: w, auto: true });
+    }
+    last = TOKEN.lastIndex;
+  }
+  if (last < tpl.length) frags.push({ kind: 'lit', text: tpl.slice(last) });
+  return frags;
+}
+
+function buildFrags(tpl) {
+  return splitTemplate(tpl).map(function (f) {
+    if (f.kind === 'lit') return { kind: 'lit', text: f.text, proper: false };
+    const info = slotInfo(f.slot);
+    return {
+      kind: 'slot', slot: f.slot, info: info, proper: info.proper,
+      text: info.empty ? '【' + info.label + '】' : info.en
+    };
+  });
+}
+
+function renderTpl(enTpl, zhTpl) {
+  const frags = buildFrags(enTpl);
+  let fixes = 0;
+  if (state.toggles.polish) {
+    // 1) 句首大写
+    for (let i = 0; i < frags.length; i++) {
+      const f = frags[i];
+      const idx = f.text.search(/[A-Za-z]/);
+      if (idx < 0) continue;
+      const ch = f.text[idx];
+      if (ch !== ch.toUpperCase()) {
+        f.text = f.text.slice(0, idx) + ch.toUpperCase() + f.text.slice(idx + 1);
+        fixes++;
+      }
+      break;
+    }
+    // 2) 逗号后非专有名词降小写
+    for (let i = 0; i < frags.length; i++) {
+      const f = frags[i];
+      let prev = '';
+      for (let j = i - 1; j >= 0; j--) { if (frags[j].text) { prev = frags[j].text; break; } }
+      if (!/,\s+$/.test(prev)) continue;
+      const m = f.text.match(/^(\s*)([A-Z][A-Za-z'\u2019-]*)/);
+      if (!m) continue;
+      const word = m[2];
+      if (word.length < 2) continue;
+      if (word === word.toUpperCase()) continue;
+      if (f.proper) continue;
+      if (PROPER_WORDS.indexOf(word) >= 0) continue;
+      f.text = m[1] + word.charAt(0).toLowerCase() + f.text.slice(m[0].length);
+      fixes++;
+    }
+  }
+  let html = '', text = '';
+  const missing = [];
+  frags.forEach(function (f) {
+    if (f.kind === 'lit') {
+      text += f.text;
+      html += '<span class="lit">' + esc(f.text) + '</span>';
+    } else {
+      const info = f.info;
+      text += f.text;
+      if (info.empty) {
+        missing.push(info.label);
+        html += '<button type="button" class="chip empty" data-slot="' + f.slot + '" title="点击选择：' + esc(info.label) + '">【' + esc(info.label) + '】</button>';
+      } else {
+        html += '<button type="button" class="chip" data-slot="' + f.slot + '" title="点击更换：' + esc(info.label) + '">' + esc(f.text) + '</button>';
+      }
+    }
+  });
+  // 中文对照：用同一条目的中文模板重新拼
+  let zh = '';
+  const zt = zhTpl === undefined ? enTpl : zhTpl;
+  if (zt) {
+    const zf = buildFrags(zt);
+    zf.forEach(function (f) {
+      if (f.kind === 'lit') { zh += f.text; return; }
+      const info = f.info;
+      zh += info.empty ? '【' + info.label + '】' : String(info.zh).replace(/（[^）]*）/g, '');
+    });
+  }
+  return { html: html, text: text, zh: zh, missing: missing, fixes: fixes };
+}
+
+/* ---------------- 行 / 方案 ---------------- */
+function curMode() { return MODE_MAP[state.mode]; }
+
+function planSet(para) {
+  const m = curMode();
+  return (PLAN_SETS[m.planKey] || {})[para] || [];
+}
+
+function applyPlanRows(para, planId) {
+  const set = planSet(para);
+  const plan = set.find(p => p.id === planId) || set[0];
+  const rows = curMode()[para] || [];
+  rows.forEach(function (row, i) {
+    const v = plan.rows[i];
+    state.rows[row.id] = (v === undefined ? '' : v);
+    if (state.rows[row.id] !== '__custom') delete state.custom[row.id];
+  });
+  if (plan) state.plans[para] = plan.id;
+}
+
+function syncAllPlans() {
+  ['p1', 'p2', 'p3'].forEach(function (p) { applyPlanRows(p, state.plans[p]); });
+}
+
+function findItemInBank(bank, id) {
+  for (let i = 0; i < bank.length; i++) if (bank[i].id === id) return bank[i];
+  return null;
+}
+
+function rowItem(row) {
+  const v = state.rows[row.id];
+  if (!v || v === '__custom') return null;
+  const bank = BANKS[row.bank] || [];
+  return findItemInBank(bank, v);
+}
+
+/* ---------------- 渲染：编排区 ---------------- */
+const composerEl = document.getElementById('composer');
+const previewEl = document.getElementById('preview');
+const statEl = document.getElementById('stat');
+const modeBadge = document.getElementById('modeBadge');
+const modeHint = document.getElementById('modeHint');
+
+function optionsHtml(bank, cur, optional) {
+  let h = '';
+  h += '<option value=""' + (cur === '' ? ' selected' : '') + '>（不写这一句）</option>';
+  h += '<option value="__custom"' + (cur === '__custom' ? ' selected' : '') + '>✎ 自定义整句…</option>';
+  const groups = [];
+  const map = {};
+  bank.forEach(function (it) {
+    const g = it.cat || '其余';
+    if (!map[g]) { map[g] = []; groups.push(g); }
+    map[g].push(it);
+  });
+  groups.forEach(function (g) {
+    h += '<optgroup label="' + esc(g) + '">';
+    map[g].forEach(function (it) {
+      const plain = String(it.en || '').replace(/\{[^}]*\}/g, '…').replace(/…(\s*…)+/g, '…');
+      const label = (it.no ? it.no + '. ' : '') + trunc(plain, 64);
+      h += '<option value="' + esc(it.id) + '"' + (cur === it.id ? ' selected' : '') + '>' + esc(label) + '</option>';
+    });
+    h += '</optgroup>';
+  });
+  return h;
+}
+
+function rowRender(row) {
+  if (row.tpl) {
+    const r = renderTpl(row.tpl, row.zhTpl);
+    return { html: r.html, text: r.text, zh: r.zh, missing: r.missing, tpl: true };
+  }
+  const cur = state.rows[row.id];
+  if (!cur) return null;
+  if (cur === '__custom') {
+    const t = (state.custom[row.id] || '').trim();
+    if (!t) return null;
+    return { html: esc(t), text: t, zh: t, missing: [], custom: true };
+  }
+  const item = rowItem(row);
+  if (!item) return null;
+  const r = renderTpl(item.en, item.zh);
+  return { html: r.html, text: r.text, zh: r.zh, missing: r.missing };
+}
+
+function renderRow(row, n) {
+  const tag = row.standalone ? esc(row.label) : '句' + n;
+  if (row.tpl) {
+    const r = rowRender(row);
+    return '<div class="row" data-row="' + row.id + '">' +
+      '<div class="rowhead"><span class="tag">' + tag + '</span>' +
+      '<span class="rlabel">点句子里的彩色词即可替换</span></div>' +
+      '<div class="sentence">' + r.html + '</div></div>';
+  }
+  const cur = state.rows[row.id] === undefined ? '' : state.rows[row.id];
+  const label = row.standalone ? '' : '<span class="rlabel">' + esc(row.label) + '</span>';
+  let inner = '', note = '';
+  if (cur === '__custom') {
+    const t = state.custom[row.id] || '';
+    inner = '<textarea class="custom" data-custom="' + row.id + '" rows="2" placeholder="直接写这一句英文">' + esc(t) + '</textarea>';
+    note = '<div class="note">自定义句：<b>不参与</b>自动润色，请自行检查语法。</div>';
+  } else {
+    const item = rowItem(row);
+    if (!item) {
+      inner = '<div class="sentence missing">（这一句暂时不写）</div>';
+    } else {
+      const r = renderTpl(item.en, item.zh);
+      inner = '<div class="sentence">' + r.html + '</div>';
+      note = '<div class="note">' + (item.note ? esc(item.note) + ' · ' : '') + '中文：' + esc(r.zh) + '</div>';
+    }
+  }
+  return '<div class="row" data-row="' + row.id + '">' +
+    '<div class="rowhead"><span class="tag">' + tag + '</span>' + label +
+    '<select data-sel="' + row.id + '" aria-label="切换句子方案">' + optionsHtml(BANKS[row.bank] || [], cur, !!row.optional) + '</select></div>' +
+    inner + note + '</div>';
+}
+
+function renderBlock(title, sub, para, rows, planOptions) {
+  let planSel = '';
+  if (planOptions && planOptions.length) {
+    planSel = '<label class="planlabel">段落方案 <select data-plan="' + para + '">' +
+      planOptions.map(function (p) {
+        return '<option value="' + p.id + '"' + (state.plans[para] === p.id ? ' selected' : '') + '>' + esc(p.name) + '</option>';
+      }).join('') + '</select></label>';
+  }
+  const body = rows.map(function (r, i) { return renderRow(r, i + 1); }).join('');
+  return '<section class="block" data-block="' + para + '">' +
+    '<div class="blockhead"><h3>' + esc(title) + '</h3><span class="sub">' + esc(sub || '') + '</span>' +
+    '<span class="grow"></span>' + planSel + '</div>' +
+    '<div class="blockbody">' + body + '</div></section>';
+}
+
+function renderComposer() {
+  const m = curMode();
+  let html = '';
+  if (m.pre && m.pre.length) {
+    html += '<section class="block" data-block="pre"><div class="blockhead"><h3>' + (m.id === 'minutes' ? '格式头' : '格式') + '</h3>' +
+      '<span class="sub">' + (m.id === 'minutes' ? '讲义 2.3：Date / Time / Location / Objective / Attendees' : '称呼：仔细读题，搞清收信人') + '</span></div>' +
+      '<div class="blockbody">' + m.pre.map(function (r, i) { return renderRow(r, i + 1); }).join('') + '</div></section>';
+  }
+  html += renderBlock(m.id === 'minutes' ? '导语（第一段）' : '第一段', m.id === 'minutes' ? '导入＋会议目的' : (m.id === 'notice' ? '通知概况＋通知目的' : '背景提要＋来信意图'), 'p1', m.p1, planSet('p1'));
+  html += renderBlock(m.id === 'minutes' ? '主体（第二段）' : '第二段', '具体内容或原因分析（先过渡句，再 2~3 句分点；讲义：弱化题型区分，强化功能表达）', 'p2', m.p2, planSet('p2'));
+  html += renderBlock(m.id === 'minutes' ? '结论（第三段）' : '第三段', m.id === 'notice' ? '发出邀请＋报名方式' : (m.id === 'minutes' ? '最终决定＋下次会议' : '表示情感＋期待回信'), 'p3', m.p3, planSet('p3'));
+  if (m.post && m.post.length) {
+    html += '<section class="block" data-block="post"><div class="blockhead"><h3>落款</h3><span class="sub">' + (m.id === 'minutes' ? 'Recorded by' : 'Yours sincerely, Li Ming') + '</span></div>' +
+      '<div class="blockbody">' + m.post.map(function (r, i) { return renderRow(r, i + 1); }).join('') + '</div></section>';
+  }
+  composerEl.innerHTML = html;
+  modeBadge.textContent = m.short;
+  modeHint.innerHTML = '<b>' + esc(m.name) + '</b>　' + esc(m.intro) + '<span class="src">' + esc(m.src) + '</span>';
+}
+
+/* ---------------- 渲染：预览 ---------------- */
+function toLine(r) {
+  if (!r) return null;
+  return {
+    en: r.text,
+    zh: r.zh,
+    html: r.html.replace(/<button[^>]*class="chip[^"]*"[^>]*>/g, '<span class="sh">').replace(/<\/button>/g, '</span>'),
+    missing: r.missing,
+    plain: !r.html
+  };
+}
+
+function renderPreview() {
+  const m = curMode();
+  const p1 = [];
+  (m.head || []).forEach(function (h) { p1.push({ en: h, zh: '', plain: true }); });
+  (m.pre || []).forEach(function (row) { const v = toLine(rowRender(row)); if (v) p1.push(v); });
+  (m.p1 || []).forEach(function (row) { const v = toLine(rowRender(row)); if (v) p1.push(v); });
+  const p2 = [];
+  (m.p2 || []).forEach(function (row) { const v = toLine(rowRender(row)); if (v) p2.push(v); });
+  const p3 = [];
+  (m.p3 || []).forEach(function (row) { const v = toLine(rowRender(row)); if (v) p3.push(v); });
+  (m.post || []).forEach(function (row) { const v = toLine(rowRender(row)); if (v) p3.push(v); });
+
+  const blocks = [
+    { title: m.id === 'minutes' ? '导语' : '第一段', lines: p1 },
+    { title: m.id === 'minutes' ? '主体' : '第二段', lines: p2 },
+    { title: m.id === 'minutes' ? '结论' : '第三段', lines: p3 }
+  ];
+
+  let html = '', words = 0, missingCount = 0;
+  blocks.forEach(function (b) {
+    if (!b.lines.length) return;
+    html += '<section class="pblock"><h4><span class="cn">' + b.title + '</span></h4>';
+    b.lines.forEach(function (ln) {
+      if (ln.plain) {
+        html += '<div class="pen">' + esc(ln.en) + '</div>';
+      } else {
+        html += '<div class="pen">' + ln.html + '</div>';
+        if (ln.zh && ln.zh !== ln.en) html += '<div class="pzh">' + esc(ln.zh) + '</div>';
+      }
+      if (ln.missing) missingCount += ln.missing.length;
+      words += (ln.en.match(/[A-Za-z][A-Za-z'\u2019-]*/g) || []).length;
+    });
+    html += '</section>';
+  });
+  if (!html) html = '<div class="pen placeholder">还没有内容：先选一个真题预设，或从第一段开始点选句子。</div>';
+  previewEl.innerHTML = html;
+  statEl.textContent = '约 ' + words + ' 词 · 空槽 ' + missingCount;
+}
+
+function render() {
+  document.body.classList.toggle('exam', !!state.toggles.exam);
+  document.body.classList.toggle('no-zh', !state.toggles.bi);
+  document.body.classList.toggle('no-note', !state.toggles.notes);
+  document.body.classList.toggle('no-ghost', !state.toggles.ghost);
+  Array.prototype.forEach.call(document.querySelectorAll('input[data-toggle]'), function (cb) {
+    cb.checked = !!state.toggles[cb.getAttribute('data-toggle')];
+  });
+  renderComposer();
+  renderPreview();
+  document.getElementById('undoBtn').disabled = history.length === 0;
+  const ps = document.getElementById('presetSel');
+  if (ps && ps.value) ps.value = '';
+  persist();
+}
+
+/* ---------------- 顶栏 ---------------- */
+function renderModes() {
+  const box = document.getElementById('modes');
+  box.innerHTML = MODES.map(function (m) {
+    return '<button type="button" class="mode" data-mode="' + m.id + '" aria-pressed="' + (state.mode === m.id) + '">' + esc(m.name) + '</button>';
+  }).join('');
+}
+
+function renderPresets() {
+  const sel = document.getElementById('presetSel');
+  let html = '<option value="">— 选择真题，一键载入整篇 —</option>';
+  PRESETS.forEach(function (p) {
+    html += '<option value="' + p.id + '">' + esc(p.label) + '</option>';
+  });
+  sel.innerHTML = html;
+  sel.value = '';
+}
+
+const TOGGLE_DEFS = [
+  { key: 'bi', label: '中英对照' },
+  { key: 'exam', label: '考场精简' },
+  { key: 'notes', label: '句子注释' },
+  { key: 'ghost', label: '占位提示' },
+  { key: 'polish', label: '自动润色' }
+];
+
+function renderToggles() {
+  const box = document.getElementById('toggles');
+  box.innerHTML = TOGGLE_DEFS.map(function (t) {
+    return '<label class="tg"><input type="checkbox" data-toggle="' + t.key + '"' + (state.toggles[t.key] ? ' checked' : '') + '><span class="sw"></span>' + esc(t.label) + '</label>';
+  }).join('');
+}
+
+/* ---------------- 预设 ---------------- */
+function loadPreset(p) {
+  pushHistory();
+  state.mode = p.mode;
+  state.plans = defaultPlans(p.mode);
+  if (p.plan1) state.plans.p1 = p.plan1;
+  if (p.p2plan) state.plans.p2 = p.p2plan;
+  state.rows = {};
+  state.custom = {};
+  state.slots = clone(DEFAULT_SLOTS);
+  Object.assign(state.slots, clone(p.slots || {}));
+  syncAllPlans();
+  Object.assign(state.rows, clone(p.rows || {}));
+  Object.assign(state.custom, clone(p.custom || {}));
+  renderModes();
+  render();
+  toast('已载入：' + p.label);
+}
+
+function switchMode(id) {
+  if (!MODE_MAP[id] || id === state.mode) return;
+  pushHistory();
+  state.mode = id;
+  state.plans = defaultPlans(id);
+  syncAllPlans();
+  renderModes();
+  render();
+}
+
+/* ---------------- 弹层 ---------------- */
+let dlgSlot = null;
+const overlay = document.getElementById('overlay');
+const dlgList = document.getElementById('dlgList');
+const dlgSearch = document.getElementById('dlgSearch');
+const dlgCustom = document.getElementById('dlgCustom');
+
+function renderDlgList() {
+  const def = SLOTS[dlgSlot];
+  if (!def) return;
+  const q = (dlgSearch.value || '').trim().toLowerCase();
+  const cur = state.slots[dlgSlot] || '';
+  let html = '';
+  def.items.forEach(function (it, i) {
+    const hay = (it.en + ' ' + it.zh + ' ' + (it.note || '')).toLowerCase();
+    if (q && hay.indexOf(q) < 0) return;
+    html += '<button type="button" class="opt" data-opt="' + i + '" aria-selected="' + (cur === it.en) + '">' +
+      '<div class="en">' + esc(it.en) + '</div>' +
+      '<div class="zh">' + esc(it.zh) + '</div>' +
+      (it.note ? '<div class="tagline">' + esc(it.note) + '</div>' : '') + '</button>';
+  });
+  if (!html) html = '<div class="opt"><div class="zh">没有匹配项，可在下方直接手输。</div></div>';
+  dlgList.innerHTML = html;
+}
+
+function openDialog(slotId) {
+  const def = SLOTS[slotId];
+  if (!def) return;
+  dlgSlot = slotId;
+  document.getElementById('dlgTitle').textContent = def.label;
+  document.getElementById('dlgTitleZh').textContent = '（' + def.zh + '）';
+  document.getElementById('dlgDesc').textContent = '点选下面的短语，或在下方手输；改完立刻回填到句子里。每一项都标了适用语境。';
+  dlgSearch.value = '';
+  const cur = state.slots[slotId] || '';
+  const isBank = def.items.some(function (x) { return x.en === cur || normApos(x.en) === normApos(cur); });
+  dlgCustom.value = cur && !isBank ? cur : '';
+  renderDlgList();
+  overlay.hidden = false;
+  setTimeout(function () { dlgSearch.focus(); }, 30);
+}
+
+function closeDialog() {
+  overlay.hidden = true;
+  dlgSlot = null;
+}
+
+function setSlot(slotId, val) {
+  pushHistory();
+  if (val == null || val === '') delete state.slots[slotId];
+  else state.slots[slotId] = val;
+  render();
+}
+
+/* ---------------- 事件绑定 ---------------- */
+document.getElementById('modes').addEventListener('click', function (e) {
+  const b = e.target.closest('[data-mode]');
+  if (b) switchMode(b.getAttribute('data-mode'));
+});
+
+document.getElementById('presetSel').addEventListener('change', function (e) {
+  const p = PRESETS.find(function (x) { return x.id === e.target.value; });
+  if (p) loadPreset(p);
+});
+
+document.getElementById('toggles').addEventListener('change', function (e) {
+  const k = e.target.getAttribute('data-toggle');
+  if (!k) return;
+  pushHistory();
+  state.toggles[k] = !!e.target.checked;
+  render();
+});
+
+composerEl.addEventListener('change', function (e) {
+  const t = e.target;
+  if (t.hasAttribute('data-sel')) {
+    const rowId = t.getAttribute('data-sel');
+    pushHistory();
+    state.rows[rowId] = t.value;
+    if (t.value !== '__custom') delete state.custom[rowId];
+    render();
+  } else if (t.hasAttribute('data-plan')) {
+    const para = t.getAttribute('data-plan');
+    pushHistory();
+    applyPlanRows(para, t.value);
+    render();
+  }
+});
+
+composerEl.addEventListener('input', function (e) {
+  const t = e.target;
+  if (t.hasAttribute('data-custom')) {
+    state.custom[t.getAttribute('data-custom')] = t.value;
+    renderPreview();
+    persist();
+  }
+});
+
+composerEl.addEventListener('click', function (e) {
+  const chip = e.target.closest('[data-slot]');
+  if (chip) openDialog(chip.getAttribute('data-slot'));
+});
+
+dlgList.addEventListener('click', function (e) {
+  const b = e.target.closest('[data-opt]');
+  if (!b || !dlgSlot) return;
+  const def = SLOTS[dlgSlot];
+  const it = def.items[Number(b.getAttribute('data-opt'))];
+  const slot = dlgSlot;
+  closeDialog();
+  setSlot(slot, it.en);
+});
+
+dlgSearch.addEventListener('input', renderDlgList);
+document.getElementById('dlgClose').addEventListener('click', closeDialog);
+document.getElementById('dlgClear').addEventListener('click', function () {
+  const s = dlgSlot; closeDialog(); if (s) setSlot(s, '');
+});
+document.getElementById('dlgOk').addEventListener('click', function () {
+  const s = dlgSlot, v = dlgCustom.value.trim();
+  if (!s) return;
+  closeDialog();
+  setSlot(s, v);
+});
+dlgCustom.addEventListener('keydown', function (e) {
+  if (e.key === 'Enter') { e.preventDefault(); document.getElementById('dlgOk').click(); }
+});
+overlay.addEventListener('click', function (e) {
+  if (e.target === overlay) closeDialog();
+});
+document.addEventListener('keydown', function (e) {
+  if (e.key === 'Escape' && !overlay.hidden) closeDialog();
+  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z') {
+    const t = e.target;
+    if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA')) return;
+    e.preventDefault();
+    undo();
+  }
+});
+
+/* ---------------- 撤销 / 清空 / 复制 ---------------- */
+function undo() {
+  if (!history.length) { toast('没有可撤销的操作'); return; }
+  const prev = history.pop();
+  state = Object.assign(state, prev);
+  if (!MODE_MAP[state.mode]) state.mode = 'reply';
+  state.toggles = Object.assign(clone(DEFAULT_TOGGLES), prev.toggles || {});
+  renderModes();
+  renderToggles();
+  render();
+  toast('已撤销一步');
+}
+
+document.getElementById('undoBtn').addEventListener('click', undo);
+
+document.getElementById('clearBtn').addEventListener('click', function () {
+  pushHistory();
+  state.custom = {};
+  state.slots = clone(DEFAULT_SLOTS);
+  state.rows = {};
+  state.plans = defaultPlans(state.mode);
+  syncAllPlans();
+  render();
+  toast('已清空（可用撤销恢复）');
+});
+
+function plainText() {
+  const m = curMode();
+  const out = [];
+  const headLines = [];
+  (m.head || []).forEach(function (h) { headLines.push(h); });
+  (m.pre || []).forEach(function (row) {
+    const v = rowRender(row);
+    if (v && v.text.trim()) headLines.push(v.text.trim());
+  });
+  if (headLines.length) out.push(headLines.join('\n'));
+  ['p1', 'p2', 'p3'].forEach(function (p) {
+    const lines = [];
+    (m[p] || []).forEach(function (row) {
+      const v = rowRender(row);
+      if (v && v.text.trim()) lines.push(v.text.trim());
+    });
+    if (lines.length) out.push(lines.join(' '));
+  });
+  const tails = [];
+  (m.post || []).forEach(function (row) {
+    const v = rowRender(row);
+    if (v && v.text.trim()) tails.push(v.text.trim());
+  });
+  if (tails.length) out.push(tails.join('\n'));
+  return out.join('\n\n');
+}
+
+function copyText(text) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    return navigator.clipboard.writeText(text);
+  }
+  return new Promise(function (resolve, reject) {
+    try {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      const ok = document.execCommand && document.execCommand('copy');
+      document.body.removeChild(ta);
+      ok ? resolve() : reject(new Error('copy failed'));
+    } catch (err) { reject(err); }
+  });
+}
+
+document.getElementById('copyBtn').addEventListener('click', function () {
+  const text = plainText();
+  if (!text.trim()) { toast('还没有内容可复制'); return; }
+  copyText(text).then(function () { toast('已复制全文（约 ' + (text.match(/[A-Za-z][A-Za-z'\u2019-]*/g) || []).length + ' 词）'); })
+    .catch(function () { toast('复制失败：可手动选中预览区文字'); });
+});
+
+let toastTimer = null;
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function () { t.classList.remove('show'); }, 2000);
+}
+
+/* ---------------- 启动 ---------------- */
+const restored = restore();
+if (!restored) {
+  state.plans = defaultPlans('reply');
+  syncAllPlans();
+}
+renderModes();
+renderToggles();
+renderPresets();
+render();
+})();
+
+</script>
+</body>
+</html>
